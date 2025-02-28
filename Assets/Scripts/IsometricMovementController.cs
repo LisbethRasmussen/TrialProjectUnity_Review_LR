@@ -3,25 +3,62 @@ using UnityEngine.InputSystem;
 
 public class IsometricMovementController : MonoBehaviour
 {
+    #region Variables
+    [Header("Animation Events")]
+    [SerializeField] private Animator _animator;
+
     [Header("Speed & forces")]
     [Tooltip("Prevents speeding up if the player is inputing two different directions.")]
-    [Range(0f, 10f)]
     [SerializeField] private bool _normalizeSpeed;
+    [Range(0f, 10f)]
     [Tooltip("Units per seconds")]
     [SerializeField] private float _topSpeed = 2f;
-    [SerializeField] private float _acceleration = 6f;
-    [SerializeField] private float _deceleration = 5f;
+    [Tooltip("Using this will control the velocity overriding it directly, which might not work well if you're working with other forces.")]
+    [SerializeField] private bool _instantAcceleration = false;
+    [SerializeField] private float _acceleration = 50f;
+    [Tooltip("Using this will control the velocity overriding it directly, which might not work well if you're working with other forces.")]
+    [SerializeField] private bool _instantDeceleration = false;
+    [SerializeField] private float _deceleration = 50f;
 
     [Header("Isometric Movement")]
-    [Tooltip("In how much degrees the axis are titled. 0 is for classic orthogonal movement, 45 is default for most isometric games.")]
     [Range(0f, 90f)]
-    [SerializeField] private float _tiltMovementFactor = 45;
+    [Tooltip("In how much degrees the axis are titled. 0 is for classic orthogonal movement, 45 is default for most isometric games.")]
+    [SerializeField] private float _tiltAxisAngle = 45;
+    [Range(0f, 5f)]
+    [Tooltip("In how much degrees the y axis is 'squished'. 0 is for classic orthogonal movement, 45 is default for most isometric games.")]
+    [SerializeField] private float _squishAxisFactor = 10;
 
     [Header("Input References")]
     [SerializeField] private InputActionReference _movementInputReference;
 
+    [Header("Debug")]
+    [SerializeField] private bool _debug = true;
+
     private Rigidbody2D _rigidbody;
     private Vector2 _currentInput;
+    #endregion
+
+    #region Gizmos Debug
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (!_debug) return;
+
+        // Draw the axis tilt and squished
+        Vector2 xAxis = SquishVector(TiltVector(Vector2.right, _tiltAxisAngle), _squishAxisFactor);
+        Vector2 yAxis = SquishVector(TiltVector(Vector2.up, _tiltAxisAngle), _squishAxisFactor);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)xAxis);
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)yAxis);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position + (Vector3)xAxis, 0.1f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position + (Vector3)yAxis, 0.1f);
+    }
+#endif
+    #endregion
 
     private void Start()
     {
@@ -52,6 +89,7 @@ public class IsometricMovementController : MonoBehaviour
         }
         else
         {
+            Debug.Log("Canceled");
             _currentInput = Vector2.zero;
         }
     }
@@ -71,23 +109,48 @@ public class IsometricMovementController : MonoBehaviour
             Vector2 movementInput = _normalizeSpeed ? _currentInput.normalized : _currentInput;
 
             // Tilt the axis to the desired angle
-            Vector2 tiltedInput = TiltVector(movementInput, _tiltMovementFactor);
+            Vector2 tiltedInput = TiltVector(movementInput, _tiltAxisAngle);
+            tiltedInput = SquishVector(tiltedInput, _squishAxisFactor);
 
             // Calculate the target velocity and acceleration
             Vector2 targetVelocity = tiltedInput * _topSpeed;
-            Vector2 acceleration = (targetVelocity - _rigidbody.linearVelocity) * _acceleration;
 
-            _rigidbody.AddForce(acceleration, ForceMode2D.Force);
+            if (_instantAcceleration)
+            {
+                // Compute needed acceleration to reach the target velocity instantly as an impulse force
+                Vector2 impulse = (targetVelocity - _rigidbody.linearVelocity) * _rigidbody.mass;
+                _rigidbody.AddForce(impulse, ForceMode2D.Impulse);
+            }
+            else
+            {
+                Vector2 acceleration = (targetVelocity - _rigidbody.linearVelocity) * _acceleration;
+                _rigidbody.AddForce(acceleration, ForceMode2D.Force);
+            }
         }
         else
         {
-            Vector2 deceleration = -_rigidbody.linearVelocity.normalized * _deceleration;
-            _rigidbody.AddForce(deceleration, ForceMode2D.Force);
+            if (_instantDeceleration)
+            {
+                // Compute needed deceleration to reach 0 velocity instantly as an impulse force
+                Vector2 impulse = -_rigidbody.linearVelocity * _rigidbody.mass;
+                _rigidbody.AddForce(impulse, ForceMode2D.Impulse);
+            }
+            else
+            {
+                // Decelerate the player
+                Vector2 deceleration = -_rigidbody.linearVelocity * _deceleration;
+                _rigidbody.AddForce(deceleration, ForceMode2D.Force);
+            }
         }
     }
 
     static private Vector2 TiltVector(Vector2 vector, float angle)
     {
         return Quaternion.Euler(0, 0, -angle) * vector;
+    }
+
+    static private Vector2 SquishVector(Vector2 vector, float squishFactor)
+    {
+        return new Vector2(vector.x, vector.y * squishFactor);
     }
 }
