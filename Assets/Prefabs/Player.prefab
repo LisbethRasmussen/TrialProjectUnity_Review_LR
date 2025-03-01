@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3434459439888545929}
   - component: {fileID: 4223214195325193475}
+  - component: {fileID: 6269758326182798318}
   - component: {fileID: 4837097233711286780}
   - component: {fileID: 6486387729284928436}
   m_Layer: 7
@@ -59,6 +60,24 @@ MonoBehaviour:
   _squishAxisFactor: 0.5
   _movementInputReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _debug: 1
+--- !u!114 &6269758326182798318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520303790343571782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f894c8c8f29ec4984a8f74c9c6aff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _currentHealth: 100
+  defense: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &4837097233711286780
 Rigidbody2D:
   serializedVersion: 5
