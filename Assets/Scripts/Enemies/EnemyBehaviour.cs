@@ -17,14 +17,17 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Patrol")]
     public float PatrolingRangeDetection = 5f;
     public Transform[] PossiblePatrolPoints;
+    public GameObject PatrolIcon;
 
     [Header("Chasing")]
     public float MaxChaseRange = 6f;
     public float AttackRange = 1f;
+    public GameObject ChasingIcon;
 
     [Header("Attacking")]
     public float AttackCooldown = 1f;
     public float AttackDamage = 1f;
+    public GameObject AttackingIcon;
 
     [Header("Debug")]
     [SerializeField] private bool _showDebug = false;
@@ -71,6 +74,15 @@ public class EnemyBehaviour : MonoBehaviour
         _currentState?.Update();
     }
 
+    public void Move(Vector3 deltaPosition)
+    {
+        if (Physics2D.OverlapCircle(transform.position + deltaPosition, 0.1f, WallLayer) == null)
+        {
+            transform.position += deltaPosition;
+            EnemySprite.transform.up = deltaPosition.normalized;
+        }
+    }
+
     public void ChangeState(EnemyState newState)
     {
         if (_showDebug)
@@ -81,5 +93,29 @@ public class EnemyBehaviour : MonoBehaviour
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
+
+        switch (_currentState)
+        {
+            case IdleEnemyState _:
+                PatrolIcon.SetActive(false);
+                ChasingIcon.SetActive(false);
+                AttackingIcon.SetActive(false);
+                break;
+            case ChaseEnemyState _:
+                PatrolIcon.SetActive(false);
+                ChasingIcon.SetActive(true);
+                AttackingIcon.SetActive(false);
+                break;
+            case PatrolEnemyState _:
+                PatrolIcon.SetActive(true);
+                ChasingIcon.SetActive(false);
+                AttackingIcon.SetActive(false);
+                break;
+            case AttackEnemyState _:
+                PatrolIcon.SetActive(false);
+                ChasingIcon.SetActive(false);
+                AttackingIcon.SetActive(true);
+                break;
+        }
     }
 }

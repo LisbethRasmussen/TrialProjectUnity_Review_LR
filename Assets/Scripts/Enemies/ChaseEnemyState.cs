@@ -29,8 +29,6 @@ public class ChaseEnemyState : EnemyState
             return;
         }
 
-        Vector3 direction = _chasingTransform.position - _enemy.transform.position;
-        _enemy.transform.position += direction.normalized * _enemy.Speed * Time.deltaTime;
-        _enemy.EnemySprite.transform.up = direction;
+        _enemy.Move(_enemy.Speed * Time.deltaTime * (_chasingTransform.position - _enemy.transform.position).normalized);
     }
 }
