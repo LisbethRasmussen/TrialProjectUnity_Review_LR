@@ -44,8 +44,14 @@ TagManager:
   - name: Background
     uniqueID: 2386112613
     locked: 0
+  - name: Obstacles
+    uniqueID: 3069969647
+    locked: 0
   - name: Player
     uniqueID: 783891377
+    locked: 0
+  - name: Particles
+    uniqueID: 2894968479
     locked: 0
   m_RenderingLayers:
   - Default

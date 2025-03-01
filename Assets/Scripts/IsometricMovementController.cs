@@ -3,9 +3,12 @@ using UnityEngine.InputSystem;
 
 public class IsometricMovementController : MonoBehaviour
 {
+    [HideInInspector]
+    public int SpeedMultiplier = 100; // Modified by the floor for example to alter the player's speed
+
     #region Variables
-    [Header("Animation Events")]
-    [SerializeField] private Animator _animator;
+    [Header("Animations")]
+    [SerializeField] private GameObject _sprite;
 
     [Header("Speed & forces")]
     [Tooltip("Prevents speeding up if the player is inputing two different directions.")]
@@ -89,7 +92,6 @@ public class IsometricMovementController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Canceled");
             _currentInput = Vector2.zero;
         }
     }
@@ -99,6 +101,11 @@ public class IsometricMovementController : MonoBehaviour
     private void FixedUpdate()
     {
         ManageMovement();
+    }
+
+    private void Update()
+    {
+        ManageRotationAnimation();
     }
 
     private void ManageMovement()
@@ -113,7 +120,7 @@ public class IsometricMovementController : MonoBehaviour
             tiltedInput = SquishVector(tiltedInput, _squishAxisFactor);
 
             // Calculate the target velocity and acceleration
-            Vector2 targetVelocity = tiltedInput * _topSpeed;
+            Vector2 targetVelocity = tiltedInput * _topSpeed * (SpeedMultiplier / 100f);
 
             if (_instantAcceleration)
             {
@@ -144,6 +151,15 @@ public class IsometricMovementController : MonoBehaviour
         }
     }
 
+    private void ManageRotationAnimation()
+    {
+        if (_currentInput != Vector2.zero)
+        {
+            float angle = Vector2.SignedAngle(Vector2.up, GetIsometricVector(_currentInput, _tiltAxisAngle, _squishAxisFactor));
+            _sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+
     static private Vector2 TiltVector(Vector2 vector, float angle)
     {
         return Quaternion.Euler(0, 0, -angle) * vector;
@@ -152,5 +168,10 @@ public class IsometricMovementController : MonoBehaviour
     static private Vector2 SquishVector(Vector2 vector, float squishFactor)
     {
         return new Vector2(vector.x, vector.y * squishFactor);
+    }
+
+    static private Vector2 GetIsometricVector(Vector2 vector, float tiltAngle, float squishFactor)
+    {
+        return SquishVector(TiltVector(vector, tiltAngle), squishFactor);
     }
 }
