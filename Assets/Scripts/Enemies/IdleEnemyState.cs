@@ -22,7 +22,7 @@ public class IdleEnemyState : EnemyState
 
         if (_timer < 0)
         {
-            _enemy.transform.Rotate(0, 0, Random.Range(0, 360));
+            _enemy.EnemySprite.transform.Rotate(0, 0, Random.Range(0, 360));
             _timer = Random.Range(_enemy.MinTimeWaitIdleAnimation, _enemy.MaxTimeWaitIdleAnimation);
         }
 

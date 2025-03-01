@@ -54,7 +54,7 @@ public class PatrolEnemyState : EnemyState
     private void ManagePatroling()
     {
         // Move towards the patrol point
-        _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _patrolPoints[_patrolIndex].position, _enemy.Speed * Time.deltaTime);
+        _enemy.Move(_enemy.Speed * Time.deltaTime * (_patrolPoints[_patrolIndex].position - _enemy.transform.position).normalized);
 
         if (Vector3.Distance(_enemy.transform.position, _patrolPoints[_patrolIndex].position) < 0.1f)
         {
