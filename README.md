@@ -17,6 +17,6 @@ This project will follow a structured approach with proper documentation and res
 | Task | Description | Estimated Time | Actual Time | Notes |
 |-|-|-|-|-|
 |Task 1	|Project setup, workflow diagram, and estimation |1h20m| 1h40m	| Editor installation took longer than expected. |
-|Task 2	|Basic player controller, animations and camera |2h | ?	| Notes after completion |
+|Task 2	|Basic player controller, animations and camera |2h | 3h | I decided to spend some extra time to better refine the isometric movement and add particle effects for user feedback when moving on speed altering tiles. |
 |Task 3	|Enemy AI state machine, nav mesh and animations |3h | ?	| Notes after completion |
 |Task 4	|Extensive dialogue system, UI, branching and easy edit |4h | ? | Notes after completion |
