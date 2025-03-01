@@ -139,12 +139,16 @@ MonoBehaviour:
   EnemySprite: {fileID: 9052238134588377339}
   MinTimeWaitIdleAnimation: 2
   MaxTimeWaitIdleAnimation: 5
-  IdleRangeDetection: 5
+  IdleRangeDetection: 10
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 128
+  PatrolingRangeDetection: 5
+  PossiblePatrolPoints: []
   MaxChaseRange: 6
   AttackRange: 1
+  AttackCooldown: 1
+  AttackDamage: 1
   _showDebug: 1
   ChasingTransform: {fileID: 0}
 --- !u!1 &9052238134588377339

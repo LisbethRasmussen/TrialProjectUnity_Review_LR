@@ -36,7 +36,7 @@ public class IdleEnemyState : EnemyState
         if (collider2D)
         {
             _enemy.ChasingTransform = collider2D.transform;
-            _enemy.ChangeState(_enemy.ChaseState);
+            _enemy.ChangeState(_enemy.PatrolState);
         }
     }
 }

@@ -11,8 +11,12 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Idle")]
     public float MinTimeWaitIdleAnimation = 2f;
     public float MaxTimeWaitIdleAnimation = 5f;
-    public float IdleRangeDetection = 5f;
+    public float IdleRangeDetection = 10f;
     public LayerMask PlayerLayer;
+
+    [Header("Patrol")]
+    public float PatrolingRangeDetection = 5f;
+    public Transform[] PossiblePatrolPoints;
 
     [Header("Chasing")]
     public float MaxChaseRange = 6f;
@@ -41,6 +45,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, IdleRangeDetection);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, PatrolingRangeDetection);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, MaxChaseRange);
         Gizmos.color = Color.red;
