@@ -3280,6 +3280,10 @@ PrefabInstance:
       propertyPath: 'PossiblePatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 453853877}
+    - target: {fileID: 6993675575428804867, guid: 95c9da2f57c8e6b4e984e3622e30514b, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7050819380718648948, guid: 95c9da2f57c8e6b4e984e3622e30514b, type: 3}
       propertyPath: m_Name
       value: Enemy

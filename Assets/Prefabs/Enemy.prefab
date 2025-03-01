@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6422270643936711108}
   - component: {fileID: 1207450215097231926}
   - component: {fileID: 1672386001330911143}
+  - component: {fileID: 7504653099406010413}
   m_Layer: 0
   m_Name: PatrolIcon
   m_TagString: Untagged
@@ -116,6 +117,28 @@ Canvas:
   m_SortingLayerID: -820898871
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &7504653099406010413
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540467159614936104}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2598996386090820941
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +318,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1
+  m_fontSize: 0.85
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -540,13 +563,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  PatrolIcon: {fileID: 2540467159614936104}
+  PatrolIcon: {fileID: 7504653099406010413}
   MaxChaseRange: 6
   AttackRange: 1
-  ChasingIcon: {fileID: 8710011733168845350}
+  ChasingIcon: {fileID: 2081988165608064586}
   AttackCooldown: 1
   AttackDamage: 1
-  AttackingIcon: {fileID: 7849882030832968544}
+  AttackingIcon: {fileID: 452353010219425014}
   _showDebug: 1
   ChasingTransform: {fileID: 0}
 --- !u!1 &7849882030832968544
@@ -560,6 +583,7 @@ GameObject:
   - component: {fileID: 5479361420095064440}
   - component: {fileID: 3436365230137770765}
   - component: {fileID: 4944593204832017520}
+  - component: {fileID: 452353010219425014}
   m_Layer: 0
   m_Name: AttackIcon
   m_TagString: Untagged
@@ -664,6 +688,28 @@ Canvas:
   m_SortingLayerID: -820898871
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &452353010219425014
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849882030832968544}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8710011733168845350
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +721,7 @@ GameObject:
   - component: {fileID: 7577432647839134408}
   - component: {fileID: 6526761698824252441}
   - component: {fileID: 8799869236525496203}
+  - component: {fileID: 2081988165608064586}
   m_Layer: 0
   m_Name: ChaseIcon
   m_TagString: Untagged
@@ -780,6 +827,28 @@ Canvas:
   m_SortingLayerID: -820898871
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &2081988165608064586
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710011733168845350}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dbf9069768a549443b48a82e9f102b2b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9052238134588377339
 GameObject:
   m_ObjectHideFlags: 0
