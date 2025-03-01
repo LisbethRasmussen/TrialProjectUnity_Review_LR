@@ -961,6 +961,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &587764800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 520303790343571782, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+  m_PrefabInstance: {fileID: 8338234447102083133}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,6 +3210,34 @@ PrefabInstance:
     - target: {fileID: 3434459439888545929, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 587764800}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269758326182798318, guid: 49d478b7db3c0454a86cbb4cab5e3a7a, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
