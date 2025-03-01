@@ -17,17 +17,17 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Patrol")]
     public float PatrolingRangeDetection = 5f;
     public Transform[] PossiblePatrolPoints;
-    public GameObject PatrolIcon;
+    public Animator PatrolIcon;
 
     [Header("Chasing")]
     public float MaxChaseRange = 6f;
     public float AttackRange = 1f;
-    public GameObject ChasingIcon;
+    public Animator ChasingIcon;
 
     [Header("Attacking")]
     public float AttackCooldown = 1f;
     public float AttackDamage = 1f;
-    public GameObject AttackingIcon;
+    public Animator AttackingIcon;
 
     [Header("Debug")]
     [SerializeField] private bool _showDebug = false;
@@ -74,6 +74,10 @@ public class EnemyBehaviour : MonoBehaviour
         _currentState?.Update();
     }
 
+    /// <summary>
+    /// Should be used to move the enemy since this function takes care of wall check and sprite rotation.
+    /// </summary>
+    /// <param name="deltaPosition">The movement vector.</param>
     public void Move(Vector3 deltaPosition)
     {
         if (Physics2D.OverlapCircle(transform.position + deltaPosition, 0.1f, WallLayer) == null)
@@ -94,27 +98,28 @@ public class EnemyBehaviour : MonoBehaviour
         _currentState = newState;
         _currentState.OnEnter();
 
+        // Update the icons
         switch (_currentState)
         {
             case IdleEnemyState _:
-                PatrolIcon.SetActive(false);
-                ChasingIcon.SetActive(false);
-                AttackingIcon.SetActive(false);
+                PatrolIcon.gameObject.SetActive(false);
+                ChasingIcon.gameObject.SetActive(false);
+                AttackingIcon.gameObject.SetActive(false);
                 break;
             case ChaseEnemyState _:
-                PatrolIcon.SetActive(false);
-                ChasingIcon.SetActive(true);
-                AttackingIcon.SetActive(false);
+                PatrolIcon.gameObject.SetActive(false);
+                ChasingIcon.gameObject.SetActive(true);
+                AttackingIcon.gameObject.SetActive(false);
                 break;
             case PatrolEnemyState _:
-                PatrolIcon.SetActive(true);
-                ChasingIcon.SetActive(false);
-                AttackingIcon.SetActive(false);
+                PatrolIcon.gameObject.SetActive(true);
+                ChasingIcon.gameObject.SetActive(false);
+                AttackingIcon.gameObject.SetActive(false);
                 break;
             case AttackEnemyState _:
-                PatrolIcon.SetActive(false);
-                ChasingIcon.SetActive(false);
-                AttackingIcon.SetActive(true);
+                PatrolIcon.gameObject.SetActive(false);
+                ChasingIcon.gameObject.SetActive(false);
+                AttackingIcon.gameObject.SetActive(true);
                 break;
         }
     }
