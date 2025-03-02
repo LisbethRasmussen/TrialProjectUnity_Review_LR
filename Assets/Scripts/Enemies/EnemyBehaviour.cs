@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
     #region Serialized Fields
+    // I don't like having all fields public, but it's easier to access them from the states themselves.
+    // Otherwise, I would have to create a lot of getters and setters, which would make the code harder to read.
+
     [Header("Speed & properties")]
     public float Speed = 2f;
     public LayerMask WallLayer;
@@ -64,11 +68,6 @@ public class EnemyBehaviour : MonoBehaviour
 #endif
     #endregion
 
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
@@ -97,6 +96,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// Should be used to move the enemy since this function takes care of wall check and sprite rotation.
     /// </summary>
     /// <param name="deltaPosition">The movement vector.</param>
+    [Obsolete("Use SetDestination instead.")]
     public void Move(Vector3 deltaPosition)
     {
         if (Physics2D.OverlapCircle(transform.position + deltaPosition, 0.1f, WallLayer) == null)
@@ -106,11 +106,19 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the destination of the NavMeshAgent. Should be used to move the enemy. 
+    /// </summary>
+    /// <param name="destination"></param>
     public void SetDestination(Vector3 destination)
     {
         NavMeshAgent.SetDestination(destination);
     }
 
+    /// <summary>
+    /// Changes the state of the enemy. Use the variables IdleState, ChaseState, PatrolState and AttackState to change the state.
+    /// </summary>
+    /// <param name="newState"></param>
     public void ChangeState(EnemyState newState)
     {
         if (_showDebug)
