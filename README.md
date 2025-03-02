@@ -18,7 +18,7 @@ This project will follow a structured approach with proper documentation and res
 |-|-|-|-|-|
 |Task 1	|Project setup, workflow diagram, and estimation |1h20m| 1h40m	| Editor installation took longer than expected. |
 |Task 2	|Basic player controller, animations and camera |2h | 3h | I decided to spend some extra time to better refine the isometric movement and add particle effects for user feedback when moving on speed altering tiles. |
-|Task 3	|Enemy AI state machine, nav mesh and animations |3h | 8h | NavMesh usage for 2D required some extra installation and understanding. I also greatly underestimated the task, especially that I need to rebuild the entire level to better fit an isometric world.|
+|Task 3	|Enemy AI state machine, nav mesh and animations |3h | 5h20m | NavMesh usage for 2D required some extra installation and understanding. I also greatly underestimated the task, especially that I need to rebuild the entire level to better fit an isometric world.|
 |Task 4	|Extensive dialogue system, UI, branching and easy edit |4h | ? | Notes after completion |
 
 ## 🎮 Gameplay Mechanics
