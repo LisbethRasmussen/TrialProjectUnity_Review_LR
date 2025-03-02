@@ -11,6 +11,8 @@ public class AttackEnemyState : EnemyState
 
     public override void OnEnter()
     {
+        _enemy.NavMeshAgent.isStopped = true;
+
         if (_enemy.ChasingTransform.TryGetComponent(out HealthManager healthManager))
         {
             _playerHealthManager = healthManager;

@@ -8,7 +8,7 @@ public class IdleEnemyState : EnemyState
 
     public override void OnEnter()
     {
-
+        _enemy.NavMeshAgent.isStopped = true;
     }
 
     public override void OnExit()

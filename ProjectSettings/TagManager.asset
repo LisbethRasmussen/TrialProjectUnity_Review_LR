@@ -47,6 +47,12 @@ TagManager:
   - name: Obstacles
     uniqueID: 3069969647
     locked: 0
+  - name: World
+    uniqueID: 3156434881
+    locked: 0
+  - name: ElevatedWorld
+    uniqueID: 1554677279
+    locked: 0
   - name: Enemies
     uniqueID: 1163411295
     locked: 0

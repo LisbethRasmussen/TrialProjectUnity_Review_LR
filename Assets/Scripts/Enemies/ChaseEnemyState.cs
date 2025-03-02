@@ -9,6 +9,7 @@ public class ChaseEnemyState : EnemyState
     public override void OnEnter()
     {
         _chasingTransform = _enemy.ChasingTransform;
+        _enemy.NavMeshAgent.isStopped = false;
     }
 
     public override void OnExit()
@@ -29,6 +30,7 @@ public class ChaseEnemyState : EnemyState
             return;
         }
 
-        _enemy.Move(_enemy.Speed * Time.deltaTime * (_chasingTransform.position - _enemy.transform.position).normalized);
+        _enemy.SetDestination(_chasingTransform.position);
+        //_enemy.Move(_enemy.Speed * Time.deltaTime * (_chasingTransform.position - _enemy.transform.position).normalized);
     }
 }
