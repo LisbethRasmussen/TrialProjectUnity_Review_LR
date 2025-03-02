@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PatrolEnemyState : EnemyState
 {
-    private Transform[] _patrolPoints = new Transform[2];
+    private readonly Transform[] _patrolPoints = new Transform[2];
     private bool _patrolAvailable = true;
     private int _patrolIndex = 0;
 
@@ -44,7 +44,6 @@ public class PatrolEnemyState : EnemyState
 
     public override void Update()
     {
-        // TODO: Check if we are close to the player and change to ChaseState
         CheckPlayerRange();
 
         if (!_patrolAvailable) return;
@@ -56,18 +55,10 @@ public class PatrolEnemyState : EnemyState
     {
         // Move towards the patrol point
         _enemy.SetDestination(_patrolPoints[_patrolIndex].position);
-        //_enemy.Move(_enemy.Speed * Time.deltaTime * (_patrolPoints[_patrolIndex].position - _enemy.transform.position).normalized);
 
         if (!_enemy.NavMeshAgent.pathPending && _enemy.NavMeshAgent.remainingDistance < _enemy.PatrolPointReachPrecision)
         {
-            //Debug.Log("Reached patrol point " + _patrolIndex);
             _patrolIndex = (_patrolIndex + 1) % 2;
-            //Debug.Log("Going to patrol point " + _patrolIndex);
-        }
-        else
-        {
-            //Debug.Log("Moving to patrol point :\n" +
-            //"Distance is " + _enemy.NavMeshAgent.remainingDistance);
         }
     }
 

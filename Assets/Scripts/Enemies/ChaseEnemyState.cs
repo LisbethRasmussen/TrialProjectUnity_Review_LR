@@ -31,6 +31,5 @@ public class ChaseEnemyState : EnemyState
         }
 
         _enemy.SetDestination(_chasingTransform.position);
-        //_enemy.Move(_enemy.Speed * Time.deltaTime * (_chasingTransform.position - _enemy.transform.position).normalized);
     }
 }
