@@ -14,6 +14,7 @@ public class PatrolEnemyState : EnemyState
     public override void OnEnter()
     {
         RefreshPatrolPoints();
+        _enemy.NavMeshAgent.isStopped = false;
     }
 
     private void RefreshPatrolPoints()
@@ -54,11 +55,19 @@ public class PatrolEnemyState : EnemyState
     private void ManagePatroling()
     {
         // Move towards the patrol point
-        _enemy.Move(_enemy.Speed * Time.deltaTime * (_patrolPoints[_patrolIndex].position - _enemy.transform.position).normalized);
+        _enemy.SetDestination(_patrolPoints[_patrolIndex].position);
+        //_enemy.Move(_enemy.Speed * Time.deltaTime * (_patrolPoints[_patrolIndex].position - _enemy.transform.position).normalized);
 
-        if (Vector3.Distance(_enemy.transform.position, _patrolPoints[_patrolIndex].position) < 0.1f)
+        if (!_enemy.NavMeshAgent.pathPending && _enemy.NavMeshAgent.remainingDistance < _enemy.PatrolPointReachPrecision)
         {
+            //Debug.Log("Reached patrol point " + _patrolIndex);
             _patrolIndex = (_patrolIndex + 1) % 2;
+            //Debug.Log("Going to patrol point " + _patrolIndex);
+        }
+        else
+        {
+            //Debug.Log("Moving to patrol point :\n" +
+            //"Distance is " + _enemy.NavMeshAgent.remainingDistance);
         }
     }
 

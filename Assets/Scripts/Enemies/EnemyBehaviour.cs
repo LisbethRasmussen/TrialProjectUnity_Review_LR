@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("Patrol")]
     public float PatrolingRangeDetection = 5f;
+    public float PatrolPointReachPrecision = 0.2f;
     public Transform[] PossiblePatrolPoints;
     public Animator PatrolIcon;
 
@@ -42,10 +44,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     [HideInInspector] public Transform ChasingTransform;
 
+    [HideInInspector] public NavMeshAgent NavMeshAgent;
+
     #region Gizmos
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (!_showDebug) return;
+
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, IdleRangeDetection);
         Gizmos.color = Color.yellow;
@@ -58,8 +64,20 @@ public class EnemyBehaviour : MonoBehaviour
 #endif
     #endregion
 
+    private void Awake()
+    {
+
+    }
+
     private void Start()
     {
+        NavMeshAgent = GetComponent<NavMeshAgent>();
+        NavMeshAgent.speed = Speed;
+        NavMeshAgent.autoBraking = false;
+        NavMeshAgent.updateRotation = false;
+        NavMeshAgent.updateUpAxis = false;
+        NavMeshAgent.stoppingDistance = 0.01f;
+
         // Initialize EnemyStates
         IdleState = new IdleEnemyState(this);
         ChaseState = new ChaseEnemyState(this);
@@ -72,6 +90,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void Update()
     {
         _currentState?.Update();
+        UpdateRotation();
     }
 
     /// <summary>
@@ -85,6 +104,11 @@ public class EnemyBehaviour : MonoBehaviour
             transform.position += deltaPosition;
             EnemySprite.transform.up = deltaPosition.normalized;
         }
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+        NavMeshAgent.SetDestination(destination);
     }
 
     public void ChangeState(EnemyState newState)
@@ -121,6 +145,18 @@ public class EnemyBehaviour : MonoBehaviour
                 ChasingIcon.gameObject.SetActive(false);
                 AttackingIcon.gameObject.SetActive(true);
                 break;
+        }
+    }
+
+    private void UpdateRotation()
+    {
+        // Get the speed of the navMeshAgent
+        Vector3 speed = NavMeshAgent.velocity;
+
+        // Apply the rotation according to the speed
+        if (speed != Vector3.zero)
+        {
+            EnemySprite.transform.up = speed.normalized;
         }
     }
 }
