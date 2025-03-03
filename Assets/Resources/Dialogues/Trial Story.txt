@@ -1,0 +1,37 @@
+:: StoryTitle
+Trial Story
+
+
+:: StoryData
+{
+  "ifid": "7F799176-6CA1-4BB9-ABBE-735BB3902065",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "First passage",
+  "zoom": 1
+}
+
+
+:: First passage {"position":"500,300","size":"100,100"}
+This is a first dialog !
+This is another line.
+[[Second Passage]] 
+
+
+:: LinkedPassage {"position":"900,300","size":"100,100"}
+This is a linked passage!
+[[Option 1|Option1]]
+[[Option 2|Option2]]
+
+
+:: Option1 {"position":"1050,200","size":"100,100"}
+Yep this is option 1
+
+
+:: Option2 {"position":"1050,400","size":"100,100"}
+Ohno! It's option 2!
+
+
+:: Second Passage {"position":"675,300","size":"100,100"}
+This is a second passage.
+I can link another passage like this [[LinkedPassage]]

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.crafteurmax.knitting": {
+      "version": "git@github.com:Crafteurmax/Knitting.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6ce4e4ca3afeb56b821a5856722ef759211d9377"
+    },
     "com.h8man.2d.navmeshplus": {
       "version": "git@github.com:h8man/NavMeshPlus.git",
       "depth": 0,

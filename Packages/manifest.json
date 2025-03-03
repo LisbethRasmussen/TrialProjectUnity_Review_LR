@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.crafteurmax.knitting": "git@github.com:Crafteurmax/Knitting.git",
     "com.h8man.2d.navmeshplus": "git@github.com:h8man/NavMeshPlus.git",
     "com.unity.ai.navigation": "2.0.6",
     "com.unity.cinemachine": "3.1.3",
