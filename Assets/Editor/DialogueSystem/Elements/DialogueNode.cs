@@ -17,11 +17,11 @@ public class DialogueNode : Node
     protected DialogueGraphView graphView;
     private Color defaultBackgroundColor;
 
-    public virtual void Initialize(DialogueGraphView graphView, Vector2 position)
+    public virtual void Initialize(string nodeName, DialogueGraphView graphView, Vector2 position)
     {
         this.graphView = graphView;
         ID = Guid.NewGuid().ToString();
-        DialogueName = "DialogueName";
+        DialogueName = nodeName;
         Choices = new List<DialogueChoiceSaveData>();
         DialogueText = "DialogueText";
 
