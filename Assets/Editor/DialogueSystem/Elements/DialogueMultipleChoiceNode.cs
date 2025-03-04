@@ -69,7 +69,10 @@ public class DialogueMultipleChoiceNode : DialogueNode
 
         deleteButton.AddToClassList("ds-node__button");
 
-        TextField choiceTextField = DialogueElementUtility.CreateTextField(choiceData.Text);
+        TextField choiceTextField = DialogueElementUtility.CreateTextField(choiceData.Text, null, callback =>
+        {
+            choiceData.Text = callback.newValue;
+        });
 
         choiceTextField.AddClasses(
             "ds-node__textfield",

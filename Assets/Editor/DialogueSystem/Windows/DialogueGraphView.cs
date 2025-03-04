@@ -12,17 +12,16 @@ public class DialogueGraphView : GraphView
     private SerializableDictionary<string, DialogueGroupErrorData> groups;
     private SerializableDictionary<Group, SerializableDictionary<string, DialogueNodeErrorData>> groupedNodes;
 
-    private int repeatedNamesAmount = 0;
-    public int RepeatedNamesAmount
+    private int nameErrorAmount = 0;
+    public int NameErrorAmount
     {
-        get => repeatedNamesAmount;
+        get => nameErrorAmount;
 
         set
         {
-            repeatedNamesAmount = value;
-            Debug.Log($"Repeated names amount: {repeatedNamesAmount}");
+            nameErrorAmount = value;
 
-            if (repeatedNamesAmount == 0)
+            if (nameErrorAmount == 0)
             {
                 editorWindow.EnableSaving();
             }
@@ -47,6 +46,7 @@ public class DialogueGraphView : GraphView
         OnGroupElementsAdded();
         OnGroupElementsRemoved();
         OnGroupRenamed();
+        OnGraphViewChanged();
 
         AddStyles();
     }
@@ -123,7 +123,7 @@ public class DialogueGraphView : GraphView
         }
 
         // If the name already exists, add the node to the list of nodes with the same name (there will be a duplicate)
-        RepeatedNamesAmount++;
+        NameErrorAmount++;
 
         List<DialogueNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
         groupedNodesList.Add(node);
@@ -165,7 +165,7 @@ public class DialogueGraphView : GraphView
         else
         {
             // The node was in an error state, we need to decrement the repeated names amount
-            RepeatedNamesAmount--;
+            NameErrorAmount--;
 
             if (groupedNodesList.Count == 1)
             {
@@ -191,7 +191,7 @@ public class DialogueGraphView : GraphView
 
         // If the name already exists, add the node to the list of nodes with the same name
         // This is used to show the error message when there are nodes with the same name
-        RepeatedNamesAmount++;
+        NameErrorAmount++;
 
         List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
         ungroupedNodesList.Add(node);
@@ -228,7 +228,7 @@ public class DialogueGraphView : GraphView
         else
         {
             // The node was in an error state, we need to decrement the repeated names amount
-            RepeatedNamesAmount--;
+            NameErrorAmount--;
             if (ungroupedNodesList.Count == 1)
             {
                 ungroupedNodesList[0].ResetStyle();
@@ -277,7 +277,7 @@ public class DialogueGraphView : GraphView
         }
 
         // The name already exists
-        RepeatedNamesAmount++;
+        NameErrorAmount++;
 
         List<DialogueGroup> groupList = groups[groupName].Groups;
         groupList.Add(group);
@@ -306,7 +306,7 @@ public class DialogueGraphView : GraphView
 
         if (groupsList.Count > 0)
         {
-            RepeatedNamesAmount--;
+            NameErrorAmount--;
         }
 
         if (groupsList.Count == 1)
@@ -432,9 +432,60 @@ public class DialogueGraphView : GraphView
         {
             DialogueGroup dialogueGroup = (DialogueGroup)group;
             dialogueGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
+
+            if (string.IsNullOrEmpty(dialogueGroup.title))
+            {
+                if (!string.IsNullOrEmpty(dialogueGroup.OldTitle))
+                {
+                    NameErrorAmount++;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(dialogueGroup.OldTitle))
+                {
+                    NameErrorAmount--;
+                }
+            }
+
             RemoveGroup(dialogueGroup);
             dialogueGroup.OldTitle = dialogueGroup.title;
             AddGroup(dialogueGroup);
+        };
+    }
+
+    private void OnGraphViewChanged()
+    {
+        graphViewChanged = (changes) =>
+        {
+            if (changes.edgesToCreate != null)
+            {
+                foreach (Edge edge in changes.edgesToCreate)
+                {
+                    DialogueNode nextNode = edge.input.node as DialogueNode;
+                    DialogueChoiceSaveData choiceData = (DialogueChoiceSaveData)edge.output.userData;
+                    choiceData.NodeID = nextNode.ID;
+                    edge.input.Connect(edge);
+                }
+            }
+
+            if (changes.elementsToRemove != null)
+            {
+                Type edgeType = typeof(Edge);
+
+                foreach (GraphElement element in changes.elementsToRemove)
+                {
+                    if (element.GetType() == edgeType)
+                    {
+                        Edge edge = (Edge)element;
+                        DialogueChoiceSaveData choiceData = (DialogueChoiceSaveData)edge.output.userData;
+                        choiceData.NodeID = "";
+                        edge.input.Disconnect(edge);
+                    }
+                }
+            }
+
+            return changes;
         };
     }
 

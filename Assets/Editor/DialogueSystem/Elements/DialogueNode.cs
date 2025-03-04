@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -50,6 +51,22 @@ public class DialogueNode : Node
             TextField target = (TextField)evt.target;
             target.value = evt.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
 
+            // Keep track of error inducing names
+            if (string.IsNullOrEmpty(target.value))
+            {
+                if (!string.IsNullOrEmpty(DialogueName))
+                {
+                    graphView.NameErrorAmount++;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(DialogueName))
+                {
+                    graphView.NameErrorAmount--;
+                }
+            }
+
             if (Group == null)
             {
                 graphView.RemoveUngroupedNode(this);
@@ -86,7 +103,10 @@ public class DialogueNode : Node
 
         Foldout textFoldout = DialogueElementUtility.CreateFoldout("Dialogue Text");
 
-        TextField textTextField = DialogueElementUtility.CreateTextArea(DialogueText);
+        TextField textTextField = DialogueElementUtility.CreateTextArea(DialogueText, null, callback =>
+        {
+            DialogueText = callback.newValue;
+        });
 
         textTextField.AddClasses(
             "ds-node__textfield",
@@ -137,6 +157,13 @@ public class DialogueNode : Node
     public void ResetStyle()
     {
         mainContainer.style.backgroundColor = defaultBackgroundColor;
+    }
+
+    public bool IsStartingNode()
+    {
+        Port inputPort = inputContainer.Children().First() as Port;
+
+        return inputPort.connected;
     }
     #endregion
 }
