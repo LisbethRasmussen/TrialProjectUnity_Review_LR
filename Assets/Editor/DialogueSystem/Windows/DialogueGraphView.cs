@@ -8,12 +8,14 @@ public class DialogueGraphView : GraphView
 {
 
     private SerializableDictionary<string, DialogueNodeErrorData> ungroupedNodes;
+    private SerializableDictionary<string, DialogueGroupErrorData> groups;
     private SerializableDictionary<Group, SerializableDictionary<string, DialogueNodeErrorData>> groupedNodes;
 
     public DialogueGraphView()
     {
         ungroupedNodes = new SerializableDictionary<string, DialogueNodeErrorData>();
         groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, DialogueNodeErrorData>>();
+        groups = new SerializableDictionary<string, DialogueGroupErrorData>();
 
         AddManipulators();
         AddGridBackground();
@@ -21,6 +23,7 @@ public class DialogueGraphView : GraphView
         OnElementsDeleted();
         OnGroupElementsAdded();
         OnGroupElementsRemoved();
+        OnGroupRenamed();
 
         AddStyles();
     }
@@ -77,7 +80,7 @@ public class DialogueGraphView : GraphView
         return node;
     }
 
-    public void AddGroupedNode(DialogueNode node, Group group)
+    public void AddGroupedNode(DialogueNode node, DialogueGroup group)
     {
         string nodeName = node.DialogueName;
         node.Group = group;
@@ -89,7 +92,7 @@ public class DialogueGraphView : GraphView
 
         if (!groupedNodes[group].ContainsKey(nodeName))
         {
-            DialogueNodeErrorData nodeErrorData = new DialogueNodeErrorData();
+            DialogueNodeErrorData nodeErrorData = new();
             nodeErrorData.Nodes.Add(node);
             groupedNodes[group].Add(nodeName, nodeErrorData);
             node.ResetStyle();
@@ -207,7 +210,9 @@ public class DialogueGraphView : GraphView
     {
         deleteSelection = (operationName, askUser) =>
         {
+            Type groupType = typeof(DialogueGroup);
             List<DialogueNode> nodesToDelete = new();
+            List<DialogueGroup> groupsToDelete = new();
             foreach (ISelectable selectedElement in selection)
             {
                 if (selectedElement is DialogueNode node)
@@ -215,6 +220,18 @@ public class DialogueGraphView : GraphView
                     nodesToDelete.Add(node);
                     continue;
                 }
+
+                if (selectedElement.GetType() == groupType)
+                {
+                    DialogueGroup group = (DialogueGroup)selectedElement;
+                    groupsToDelete.Add(group);
+                }
+            }
+
+            foreach (DialogueGroup group in groupsToDelete)
+            {
+                RemoveGroup(group);
+                RemoveElement(group);
             }
 
             foreach (DialogueNode node in nodesToDelete)
@@ -240,10 +257,11 @@ public class DialogueGraphView : GraphView
                     continue;
                 }
 
+                DialogueGroup nodeGroup = (DialogueGroup)group;
                 DialogueNode node = (DialogueNode)element;
 
                 RemoveUngroupedNode(node);
-                AddGroupedNode(node, group);
+                AddGroupedNode(node, nodeGroup);
             }
         };
     }
@@ -266,9 +284,20 @@ public class DialogueGraphView : GraphView
         };
     }
 
+    private void OnGroupRenamed()
+    {
+        groupTitleChanged = (group, newTitle) =>
+        {
+            DialogueGroup dialogueGroup = (DialogueGroup)group;
+            RemoveGroup(dialogueGroup);
+            dialogueGroup.oldTitle = newTitle;
+            AddGroup(dialogueGroup);
+        };
+    }
+
     #endregion
 
-    #region Groups Creation
+    #region Groups
     private IManipulator CreateGroupContextualMenu()
     {
         ContextualMenuManipulator contextualMenu = new ContextualMenuManipulator((evt) =>
@@ -278,15 +307,59 @@ public class DialogueGraphView : GraphView
         return contextualMenu;
     }
 
-    private Group CreateGroup(string title, Vector2 position)
+    private DialogueGroup CreateGroup(string title, Vector2 position)
     {
-        Group group = new Group()
-        {
-            title = title
-        };
-        group.SetPosition(new Rect(position, Vector2.zero));
-        AddElement(group);
+        DialogueGroup group = new DialogueGroup(title, position);
+        AddGroup(group);
         return group;
+    }
+
+    private void AddGroup(DialogueGroup group)
+    {
+        string groupName = group.title;
+        if (!groups.ContainsKey(groupName))
+        {
+            DialogueGroupErrorData groupErrorData = new();
+            groupErrorData.Groups.Add(group);
+            groups.Add(groupName, groupErrorData);
+            return;
+        }
+
+        List<DialogueGroup> groupList = groups[groupName].Groups;
+        groupList.Add(group);
+        Color errorColor = groups[groupName].ErrorData.Color;
+        group.SetErrorStyle(errorColor);
+
+        if (groupList.Count > 1)
+        {
+            foreach (DialogueGroup g in groupList)
+            {
+                g.SetErrorStyle(errorColor);
+            }
+        }
+        else
+        {
+            group.ResetStyle();
+        }
+    }
+
+    private void RemoveGroup(DialogueGroup group)
+    {
+        string oldGroupName = group.oldTitle;
+        List<DialogueGroup> groupsList = groups[oldGroupName].Groups;
+        groupsList.Remove(group);
+        group.ResetStyle();
+
+        if (groupsList.Count == 1)
+        {
+            groupsList[0].ResetStyle();
+            return;
+        }
+
+        if (groupsList.Count == 0)
+        {
+            groups.Remove(oldGroupName);
+        }
     }
     #endregion
 
