@@ -9,11 +9,11 @@ public class DialogueNode : Node
     [field: SerializeField] public string ID { get; set; }
     [field: SerializeField] public string DialogueName { get; set; }
     [field: SerializeField] public string DialogueText { get; set; }
-    [field: SerializeField] public List<string> Choices { get; set; }
+    [field: SerializeField] public List<DialogueChoiceSaveData> Choices { get; set; }
     [field: SerializeField] public DialogueType Type { get; set; }
     [field: SerializeField] public DialogueGroup Group { get; set; }
 
-    private DialogueGraphView graphView;
+    protected DialogueGraphView graphView;
     private Color defaultBackgroundColor;
 
     public virtual void Initialize(DialogueGraphView graphView, Vector2 position)
@@ -21,7 +21,7 @@ public class DialogueNode : Node
         this.graphView = graphView;
         ID = Guid.NewGuid().ToString();
         DialogueName = "DialogueName";
-        Choices = new List<string>();
+        Choices = new List<DialogueChoiceSaveData>();
         DialogueText = "DialogueText";
 
         defaultBackgroundColor = new Color(29 / 255f, 29 / 255f, 30 / 255f);

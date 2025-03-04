@@ -8,7 +8,13 @@ public class DialogueMultipleChoiceNode : DialogueNode
     {
         base.Initialize(graphView, position);
         Type = DialogueType.MultipleChoice;
-        Choices.Add("New Choice");
+
+        DialogueChoiceSaveData choiceData = new()
+        {
+            Text = "New Choice",
+        };
+
+        Choices.Add(choiceData);
     }
 
     public override void Draw()
@@ -16,16 +22,22 @@ public class DialogueMultipleChoiceNode : DialogueNode
         base.Draw();
 
         // Main Container
-        Button addChoiceButton = DialogueElementUtility.CreateButton("Add Choice", () => {
-            Port choicePort = CreateChoicePort("New Choice");
-            Choices.Add("New Choice");
+        Button addChoiceButton = DialogueElementUtility.CreateButton("Add Choice", () =>
+        {
+            DialogueChoiceSaveData choiceData = new()
+            {
+                Text = "New Choice",
+            };
+            Choices.Add(choiceData);
+
+            Port choicePort = CreateChoicePort(choiceData);
             outputContainer.Add(choicePort);
         });
         addChoiceButton.AddToClassList("ds-node__button");
         mainContainer.Insert(1, addChoiceButton);
 
         // Output Container
-        foreach (string choice in Choices)
+        foreach (DialogueChoiceSaveData choice in Choices)
         {
             Port choicePort = CreateChoicePort(choice);
             outputContainer.Add(choicePort);
@@ -33,18 +45,31 @@ public class DialogueMultipleChoiceNode : DialogueNode
         RefreshExpandedState();
     }
 
-    private Port CreateChoicePort(string choice)
+    private Port CreateChoicePort(object userData)
     {
-        Port choicePort = this.CreatePort(choice);
+        Port choicePort = this.CreatePort();
+        choicePort.userData = userData;
+        DialogueChoiceSaveData choiceData = (DialogueChoiceSaveData)userData;
 
-        Button deleteButton = DialogueElementUtility.CreateButton("X", () => {
-            Choices.Remove("New Choice");
-            choicePort.RemoveFromHierarchy();
+        Button deleteButton = DialogueElementUtility.CreateButton("X", () =>
+        {
+            if (Choices.Count == 1)
+            {
+                return;
+            }
+
+            if (choicePort.connected)
+            {
+                graphView.DeleteElements(choicePort.connections);
+            }
+
+            Choices.Remove(choiceData);
+            graphView.RemoveElement(choicePort);
         });
 
         deleteButton.AddToClassList("ds-node__button");
 
-        TextField choiceTextField = DialogueElementUtility.CreateTextField(choice);
+        TextField choiceTextField = DialogueElementUtility.CreateTextField(choiceData.Text);
 
         choiceTextField.AddClasses(
             "ds-node__textfield",
