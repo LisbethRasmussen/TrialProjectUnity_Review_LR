@@ -11,7 +11,7 @@ public class DialogueNode : Node
     [field: SerializeField] public string DialogueText { get; set; }
     [field: SerializeField] public List<string> Choices { get; set; }
     [field: SerializeField] public DialogueType Type { get; set; }
-    [field: SerializeField] public Group Group { get; set; }
+    [field: SerializeField] public DialogueGroup Group { get; set; }
 
     private DialogueGraphView graphView;
     private Color defaultBackgroundColor;
@@ -46,7 +46,7 @@ public class DialogueNode : Node
             else
             {
                 // Save the current group, cause it will be removed when the node is removed
-                Group currentGroup = Group;
+                DialogueGroup currentGroup = Group;
                 graphView.RemoveGroupedNode(this, Group);
                 DialogueName = evt.newValue;
                 graphView.AddGroupedNode(this, currentGroup);
