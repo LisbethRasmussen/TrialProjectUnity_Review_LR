@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public static class DialogueIOUtility
@@ -16,6 +17,9 @@ public static class DialogueIOUtility
     private static Dictionary<string, DialogueGroupSO> createdDialogueGroups;
     private static Dictionary<string, DialogueSO> createdDialogues;
 
+    private static Dictionary<string, DialogueGroup> loadedGroups;
+    private static Dictionary<string, DialogueNode> loadedNodes;
+
     public static void Initialize(DialogueGraphView graphView, string graphName)
     {
         DialogueIOUtility.graphView = graphView;
@@ -26,6 +30,8 @@ public static class DialogueIOUtility
         nodes = new List<DialogueNode>();
         createdDialogueGroups = new Dictionary<string, DialogueGroupSO>();
         createdDialogues = new Dictionary<string, DialogueSO>();
+        loadedGroups = new Dictionary<string, DialogueGroup>();
+        loadedNodes = new Dictionary<string, DialogueNode>();
     }
 
     #region Save Methods
@@ -172,17 +178,7 @@ public static class DialogueIOUtility
 
     private static void SaveNodeToGraph(DialogueNode node, DialogueGraphSaveDataSO graphData)
     {
-        List<DialogueChoiceSaveData> choices = new();
-
-        // Copy choices to avoid reference issues (the serialized object need to be updated only when saving the graph)
-        foreach (DialogueChoiceSaveData choice in node.Choices)
-        {
-            choices.Add(new DialogueChoiceSaveData
-            {
-                Text = choice.Text,
-                NodeID = choice.NodeID
-            });
-        }
+        List<DialogueChoiceSaveData> choices = CloneNodeChoices(node.Choices);
 
         DialogueNodeSaveData nodeSaveData = new()
         {
@@ -264,6 +260,92 @@ public static class DialogueIOUtility
 
     #endregion
 
+    #region Load Methods
+
+    public static void Load()
+    {
+        DialogueGraphSaveDataSO graphData = LoadAsset<DialogueGraphSaveDataSO>("Assets/Editor/DialogueSystem/Graphs", graphFileName);
+
+        if (graphData == null)
+        {
+            EditorUtility.DisplayDialog(
+                "Error",
+                "No graph data found!\n\n" +
+                $"At \"Assets/Editor/DialogueSystem/Graphs/{graphFileName}\"",
+                "Ok"
+            );
+            return;
+        }
+
+        Debug.Log("Found graph data: " + graphData);
+
+        DialogueEditorWindow.UpdateFileName(graphData.FileName);
+        LoadGroups(graphData.Groups);
+        LoadNodes(graphData.Nodes);
+        LoadNodesConnections();
+    }
+
+    private static void LoadNodesConnections()
+    {
+        foreach (KeyValuePair<string, DialogueNode> loadedNode in loadedNodes)
+        {
+            foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
+            {
+                DialogueChoiceSaveData choiceData = (DialogueChoiceSaveData)choicePort.userData;
+                if (string.IsNullOrEmpty(choiceData.NodeID))
+                {
+                    continue;
+                }
+
+                DialogueNode nextNode = loadedNodes[choiceData.NodeID];
+                Port nexNodeInputPort = nextNode.inputContainer.Children().First() as Port;
+
+                Edge edge = choicePort.ConnectTo(nexNodeInputPort);
+                graphView.AddElement(edge);
+                loadedNode.Value.RefreshPorts();
+            }
+        }
+    }
+
+    private static void LoadNodes(List<DialogueNodeSaveData> nodes)
+    {
+        foreach (DialogueNodeSaveData nodeData in nodes)
+        {
+            DialogueNode node = graphView.CreateNode(nodeData.Name, nodeData.Type, nodeData.Position, false);
+
+            node.ID = nodeData.ID;
+            node.Choices = CloneNodeChoices(nodeData.Choices);
+            node.DialogueText = nodeData.Text;
+
+            node.Draw();
+            graphView.AddElement(node);
+            loadedNodes.Add(node.ID, node);
+
+            if (string.IsNullOrEmpty(nodeData.GroupID))
+            {
+                continue;
+            }
+
+            DialogueGroup group = loadedGroups[nodeData.GroupID];
+            node.Group = group;
+            group.AddElement(node);
+        }
+    }
+
+    private static void LoadGroups(List<DialogueGroupSaveData> groups)
+    {
+        foreach (DialogueGroupSaveData groupData in groups)
+        {
+            DialogueGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
+
+            group.ID = groupData.ID;
+
+            loadedGroups.Add(group.ID, group);
+        }
+    }
+
+    #endregion
+
     #region Fetch Methods
     private static void GetElementsFromGraphView()
     {
@@ -335,7 +417,7 @@ public static class DialogueIOUtility
     {
         string fullPath = $"{path}/{assetName}.asset";
 
-        T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+        T asset = LoadAsset<T>(path, assetName);
 
         if (asset == null)
         {
@@ -344,6 +426,28 @@ public static class DialogueIOUtility
         }
 
         return asset;
+    }
+
+    private static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+    {
+        return AssetDatabase.LoadAssetAtPath<T>($"{path}/{assetName}.asset");
+    }
+
+    private static List<DialogueChoiceSaveData> CloneNodeChoices(List<DialogueChoiceSaveData> choices)
+    {
+        List<DialogueChoiceSaveData> clonedChoices = new();
+
+        // Copy choices to avoid reference issues (the serialized object need to be updated only when saving the graph)
+        foreach (DialogueChoiceSaveData choice in choices)
+        {
+            clonedChoices.Add(new DialogueChoiceSaveData
+            {
+                Text = choice.Text,
+                NodeID = choice.NodeID
+            });
+        }
+
+        return clonedChoices;
     }
     #endregion
 }

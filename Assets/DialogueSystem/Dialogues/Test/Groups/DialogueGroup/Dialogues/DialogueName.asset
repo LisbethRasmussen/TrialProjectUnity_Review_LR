@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName
   <Text>k__BackingField: DialogueText
-  <Type>k__BackingField: 0
-  <IsStartingDialogue>k__BackingField: 0
+  <Type>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 1

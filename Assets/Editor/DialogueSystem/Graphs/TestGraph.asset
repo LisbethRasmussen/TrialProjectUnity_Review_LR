@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: TestGraph
   m_EditorClassIdentifier: 
   <FileName>k__BackingField: Test
-  <OldGroupNames>k__BackingField: []
+  <OldGroupNames>k__BackingField:
+  - DialogueGroup
   <OldUngroupedNodeNames>k__BackingField:
-  - DialogueName
+  - Yes
+  - nice
   <OldGroupedNodeNames>k__BackingField:
-    list: []
+    list:
+    - Key: DialogueGroup
+      Value:
+      - DialogueName
