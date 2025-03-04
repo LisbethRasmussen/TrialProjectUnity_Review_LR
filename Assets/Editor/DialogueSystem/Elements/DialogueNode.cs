@@ -45,7 +45,7 @@ public class DialogueNode : Node
     public virtual void Draw()
     {
         // Title container
-        TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, evt =>
+        TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, null, evt =>
         {
             if (Group == null)
             {
