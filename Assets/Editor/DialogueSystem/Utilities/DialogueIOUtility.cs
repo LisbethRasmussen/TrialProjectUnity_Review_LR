@@ -309,6 +309,12 @@ public static class DialogueIOUtility
 
     private static void LoadNodes(List<DialogueNodeSaveData> nodes)
     {
+        if (nodes == null)
+        {
+            Debug.LogError("Error: Unable to load nodes. Nodes is null.");
+            return;
+        }
+
         foreach (DialogueNodeSaveData nodeData in nodes)
         {
             DialogueNode node = graphView.CreateNode(nodeData.Name, nodeData.Type, nodeData.Position, false);
@@ -334,6 +340,12 @@ public static class DialogueIOUtility
 
     private static void LoadGroups(List<DialogueGroupSaveData> groups)
     {
+        if (groups == null)
+        {
+            Debug.LogError("Error: Unable to load groups. Groups is null.");
+            return;
+        }
+
         foreach (DialogueGroupSaveData groupData in groups)
         {
             DialogueGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
