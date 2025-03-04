@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DialogueSingleChoiceNode : DialogueNode
 {
-    public override void Initialize(Vector2 position)
+    public override void Initialize(DialogueGraphView graphView, Vector2 position)
     {
-        base.Initialize(position);
+        base.Initialize(graphView, position);
 
         Type = DialogueType.SingleChoice;
 

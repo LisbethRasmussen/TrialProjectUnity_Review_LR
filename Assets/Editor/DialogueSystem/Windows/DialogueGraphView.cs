@@ -15,6 +15,9 @@ public class DialogueGraphView : GraphView
 
         AddManipulators();
         AddGridBackground();
+
+        OnElementsDeleted();
+
         AddStyles();
     }
 
@@ -58,7 +61,7 @@ public class DialogueGraphView : GraphView
     {
         Type nodeType = Type.GetType($"Dialogue{dialogueType}Node");
         DialogueNode node = (DialogueNode)Activator.CreateInstance(nodeType);
-        node.Initialize(position);
+        node.Initialize(this, position);
         node.Draw();
         node.title = "Dialogue Node";
 
@@ -70,7 +73,7 @@ public class DialogueGraphView : GraphView
 
     #region Ungrouped Nodes
 
-    private void AddUngroupedNode(DialogueNode node)
+    public void AddUngroupedNode(DialogueNode node)
     {
         string nodeName = node.DialogueName;
 
@@ -80,13 +83,15 @@ public class DialogueGraphView : GraphView
             DialogueNodeErrorData errorData = new DialogueNodeErrorData();
             errorData.Nodes.Add(node);
             ungroupedNodes.Add(nodeName, errorData);
-
+            node.ResetStyle();
             return;
         }
 
+        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+
         // If the name already exists, add the node to the list of nodes with the same name
         // This is used to show the error message when there are nodes with the same name
-        ungroupedNodes[nodeName].Nodes.Add(node);
+        ungroupedNodesList.Add(node);
         node.SetErrorStyle(ungroupedNodes[nodeName].ErrorData.Color);
         if (ungroupedNodes[nodeName].Nodes.Count > 1)
         {
@@ -95,8 +100,58 @@ public class DialogueGraphView : GraphView
                 n.SetErrorStyle(ungroupedNodes[nodeName].ErrorData.Color);
             }
         }
+        else
+        {
+            node.ResetStyle();
+        }
     }
 
+    public void RemoveUngroupedNode(DialogueNode node)
+    {
+        string nodeName = node.DialogueName;
+
+        if (!ungroupedNodes.ContainsKey(nodeName))
+        {
+            Debug.LogError("Tried to remove a non-existing node.");
+            return;
+        }
+
+        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+        ungroupedNodesList.Remove(node);
+        if (ungroupedNodesList.Count == 0)
+        {
+            ungroupedNodes.Remove(nodeName);
+        }
+        else if (ungroupedNodesList.Count == 1)
+        {
+            ungroupedNodesList[0].ResetStyle();
+        }
+    }
+
+    #endregion
+
+    #region Callbacks
+
+    private void OnElementsDeleted()
+    {
+        deleteSelection = (operationName, askUser) => {
+            List<DialogueNode> nodesToDelete = new();
+            foreach (ISelectable selectedElement in selection)
+            {
+                if (selectedElement is DialogueNode node)
+                {
+                    nodesToDelete.Add(node);
+                    continue;
+                }
+            }
+
+            foreach (DialogueNode node in nodesToDelete)
+            {
+                RemoveUngroupedNode(node);
+                RemoveElement(node);
+            }
+        };
+    }
     #endregion
 
     #region Groups Creation

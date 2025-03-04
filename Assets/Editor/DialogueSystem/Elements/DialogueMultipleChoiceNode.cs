@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 public class DialogueMultipleChoiceNode : DialogueNode
 {
-    public override void Initialize(Vector2 position)
+    public override void Initialize(DialogueGraphView graphView, Vector2 position)
     {
-        base.Initialize(position);
+        base.Initialize(graphView, position);
         Type = DialogueType.MultipleChoice;
         Choices.Add("New Choice");
     }

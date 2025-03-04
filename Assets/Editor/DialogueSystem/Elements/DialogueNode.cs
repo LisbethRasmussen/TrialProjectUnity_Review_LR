@@ -12,10 +12,12 @@ public class DialogueNode : Node
     [field: SerializeField] public List<string> Choices { get; set; }
     [field: SerializeField] public DialogueType Type { get; set; }
 
+    private DialogueGraphView graphView;
     private Color defaultBackgroundColor;
 
-    public virtual void Initialize(Vector2 position)
+    public virtual void Initialize(DialogueGraphView graphView, Vector2 position)
     {
+        this.graphView = graphView;
         ID = Guid.NewGuid().ToString();
         DialogueName = "DialogueName";
         Choices = new List<string>();
@@ -33,7 +35,9 @@ public class DialogueNode : Node
     {
         // Title container
         TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, evt => {
+            graphView.RemoveUngroupedNode(this);
             DialogueName = evt.newValue;
+            graphView.AddUngroupedNode(this);
         });
         dialogueNameTextField.AddClasses(
             "ds-node__textfield",
