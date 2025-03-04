@@ -80,7 +80,7 @@ public class DialogueGraphView : GraphView
     }
     #endregion
 
-    #region Nodes Creation
+    #region Nodes
     private IManipulator CreateNodeContextualMenu(string actionTitle, DialogueType dialogueType)
     {
         ContextualMenuManipulator contextualMenu = new ContextualMenuManipulator((evt) =>
@@ -105,7 +105,7 @@ public class DialogueGraphView : GraphView
 
     public void AddGroupedNode(DialogueNode node, DialogueGroup group)
     {
-        string nodeName = node.DialogueName;
+        string nodeName = node.DialogueName.ToLower();
         node.Group = group;
 
         if (!groupedNodes.ContainsKey(group))
@@ -144,7 +144,7 @@ public class DialogueGraphView : GraphView
 
     public void RemoveGroupedNode(DialogueNode node, Group group)
     {
-        string nodeName = node.DialogueName;
+        string nodeName = node.DialogueName.ToLower();
         node.Group = null;
         List<DialogueNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
         groupedNodesList.Remove(node);
@@ -177,7 +177,7 @@ public class DialogueGraphView : GraphView
 
     public void AddUngroupedNode(DialogueNode node)
     {
-        string nodeName = node.DialogueName;
+        string nodeName = node.DialogueName.ToLower();
 
         if (!ungroupedNodes.ContainsKey(nodeName))
         {
@@ -211,7 +211,7 @@ public class DialogueGraphView : GraphView
 
     public void RemoveUngroupedNode(DialogueNode node)
     {
-        string nodeName = node.DialogueName;
+        string nodeName = node.DialogueName.ToLower();
 
         if (!ungroupedNodes.ContainsKey(nodeName))
         {
@@ -267,7 +267,7 @@ public class DialogueGraphView : GraphView
 
     private void AddGroup(DialogueGroup group)
     {
-        string groupName = group.title;
+        string groupName = group.title.ToLower();
         if (!groups.ContainsKey(groupName))
         {
             DialogueGroupErrorData groupErrorData = new();
@@ -299,7 +299,7 @@ public class DialogueGraphView : GraphView
 
     private void RemoveGroup(DialogueGroup group)
     {
-        string oldGroupName = group.oldTitle;
+        string oldGroupName = group.OldTitle.ToLower();
         List<DialogueGroup> groupsList = groups[oldGroupName].Groups;
         groupsList.Remove(group);
         group.ResetStyle();
@@ -431,8 +431,9 @@ public class DialogueGraphView : GraphView
         groupTitleChanged = (group, newTitle) =>
         {
             DialogueGroup dialogueGroup = (DialogueGroup)group;
+            dialogueGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
             RemoveGroup(dialogueGroup);
-            dialogueGroup.oldTitle = newTitle;
+            dialogueGroup.OldTitle = dialogueGroup.title;
             AddGroup(dialogueGroup);
         };
     }

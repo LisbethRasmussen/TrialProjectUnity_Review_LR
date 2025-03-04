@@ -47,6 +47,9 @@ public class DialogueNode : Node
         // Title container
         TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, null, evt =>
         {
+            TextField target = (TextField)evt.target;
+            target.value = evt.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+
             if (Group == null)
             {
                 graphView.RemoveUngroupedNode(this);
