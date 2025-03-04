@@ -504,4 +504,19 @@ public class DialogueGraphView : GraphView
         Insert(0, grid);
     }
     #endregion
+
+    #region Utility Methods
+
+    public void ClearGraph()
+    {
+        graphElements.ForEach((element) => RemoveElement(element));
+
+        groups.Clear();
+        groupedNodes.Clear();
+        ungroupedNodes.Clear();
+
+        NameErrorAmount = 0;
+    }
+    #endregion
 }
+

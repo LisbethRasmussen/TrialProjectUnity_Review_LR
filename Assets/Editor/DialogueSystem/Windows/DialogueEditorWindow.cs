@@ -38,8 +38,16 @@ public class DialogueEditorWindow : EditorWindow
             Debug.Log("Save button clicked");
         });
 
+        Button clearButton = DialogueElementUtility.CreateButton("Clear", () =>
+        {
+            graphView.ClearGraph();
+            fileNameTextField.value = defaultFileName;
+        });
+
         toolbar.Add(fileNameTextField);
         toolbar.Add(saveButton);
+        toolbar.Add(clearButton);
+
         toolbar.AddStyleSheets("DialogueSystem/DialogueToolBarStyles.uss");
         rootVisualElement.Add(toolbar);
     }
