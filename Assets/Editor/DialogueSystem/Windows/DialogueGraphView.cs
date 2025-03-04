@@ -264,7 +264,7 @@ public class DialogueGraphView : GraphView
                 node.Group?.RemoveElement(node);
 
                 RemoveUngroupedNode(node);
-
+                node.DisconnectAllPorts();
                 RemoveElement(node);
             }
         };
