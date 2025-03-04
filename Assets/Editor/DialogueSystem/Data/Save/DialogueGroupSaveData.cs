@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class DialogueGroupSaveData
 {
     [field: SerializeField] public string ID { get; set; }

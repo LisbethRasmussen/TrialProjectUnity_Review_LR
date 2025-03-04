@@ -447,6 +447,12 @@ public static class DialogueIOUtility
 
     private static List<DialogueChoiceSaveData> CloneNodeChoices(List<DialogueChoiceSaveData> choices)
     {
+        if (choices == null)
+        {
+            Debug.LogError("Error: Unable to copy choices. Choices is null.");
+            return new List<DialogueChoiceSaveData>();
+        }
+
         List<DialogueChoiceSaveData> clonedChoices = new();
 
         // Copy choices to avoid reference issues (the serialized object need to be updated only when saving the graph)
