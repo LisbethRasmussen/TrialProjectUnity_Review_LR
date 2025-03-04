@@ -14,12 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <FileName>k__BackingField: Test
   <OldGroupNames>k__BackingField:
+  - MegaGroup
   - DialogueGroup
+  - Group
   <OldUngroupedNodeNames>k__BackingField:
-  - Yes
-  - nice
+  - DialogueName1
+  - DialogueName2
+  - DialogueName
   <OldGroupedNodeNames>k__BackingField:
     list:
+    - Key: MegaGroup
+      Value:
+      - opt2
+      - opt1
     - Key: DialogueGroup
       Value:
       - DialogueName
+    - Key: Group
+      Value:
+      - 2
+      - 1

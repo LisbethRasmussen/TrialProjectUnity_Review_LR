@@ -385,19 +385,19 @@ public static class DialogueIOUtility
 
     #region Utility Methods
 
-    private static void SaveAsset(UnityEngine.Object asset)
+    public static void SaveAsset(UnityEngine.Object asset)
     {
         EditorUtility.SetDirty(asset);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
 
-    private static void RemoveAsset(string path, string assetName)
+    public static void RemoveAsset(string path, string assetName)
     {
         AssetDatabase.DeleteAsset($"{path}/{assetName}.asset");
     }
 
-    private static void CreateFolder(string path, string foldername)
+    public static void CreateFolder(string path, string foldername)
     {
         if (AssetDatabase.IsValidFolder($"{path}/{foldername}"))
         {
@@ -407,13 +407,13 @@ public static class DialogueIOUtility
         AssetDatabase.CreateFolder(path, foldername);
     }
 
-    private static void RemoveFolder(string fullPath)
+    public static void RemoveFolder(string fullPath)
     {
         FileUtil.DeleteFileOrDirectory($"{fullPath}.meta");
         FileUtil.DeleteFileOrDirectory($"{fullPath}/");
     }
 
-    private static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
+    public static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
     {
         string fullPath = $"{path}/{assetName}.asset";
 
@@ -428,7 +428,7 @@ public static class DialogueIOUtility
         return asset;
     }
 
-    private static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+    public static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
     {
         return AssetDatabase.LoadAssetAtPath<T>($"{path}/{assetName}.asset");
     }
