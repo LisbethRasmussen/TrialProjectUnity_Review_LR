@@ -7,6 +7,8 @@ public class DialogueEditorWindow : EditorWindow
 {
     private readonly string defaultFileName = "DialogueFileName";
 
+    private Button saveButton;
+
     [MenuItem("Window/DialogueEditorWindow")]
     public static void ShowExample()
     {
@@ -26,7 +28,7 @@ public class DialogueEditorWindow : EditorWindow
         Toolbar toolbar = new Toolbar();
         TextField fileNameTextField = DialogueElementUtility.CreateTextField(defaultFileName, "File Name:");
 
-        Button saveButton = DialogueElementUtility.CreateButton("Save", () =>
+        saveButton = DialogueElementUtility.CreateButton("Save", () =>
         {
             Debug.Log("Save button clicked");
         });
@@ -43,8 +45,18 @@ public class DialogueEditorWindow : EditorWindow
 
     private void AddGraphView()
     {
-        DialogueGraphView graphView = new DialogueGraphView();
+        DialogueGraphView graphView = new DialogueGraphView(this);
         graphView.StretchToParentSize();
         rootVisualElement.Add(graphView);
+    }
+
+    public void EnableSaving()
+    {
+        saveButton.SetEnabled(true);
+    }
+
+    public void DisableSaving()
+    {
+        saveButton.SetEnabled(false);
     }
 }

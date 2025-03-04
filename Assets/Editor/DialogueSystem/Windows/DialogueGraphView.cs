@@ -6,13 +6,36 @@ using UnityEngine.UIElements;
 
 public class DialogueGraphView : GraphView
 {
+    private DialogueEditorWindow editorWindow;
 
     private SerializableDictionary<string, DialogueNodeErrorData> ungroupedNodes;
     private SerializableDictionary<string, DialogueGroupErrorData> groups;
     private SerializableDictionary<Group, SerializableDictionary<string, DialogueNodeErrorData>> groupedNodes;
 
-    public DialogueGraphView()
+    private int repeatedNamesAmount = 0;
+    public int RepeatedNamesAmount
     {
+        get => repeatedNamesAmount;
+
+        set
+        {
+            repeatedNamesAmount = value;
+            Debug.Log($"Repeated names amount: {repeatedNamesAmount}");
+
+            if (repeatedNamesAmount == 0)
+            {
+                editorWindow.EnableSaving();
+            }
+            else
+            {
+                editorWindow.DisableSaving();
+            }
+        }
+    }
+
+    public DialogueGraphView(DialogueEditorWindow editorWindow)
+    {
+        this.editorWindow = editorWindow;
         ungroupedNodes = new SerializableDictionary<string, DialogueNodeErrorData>();
         groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, DialogueNodeErrorData>>();
         groups = new SerializableDictionary<string, DialogueGroupErrorData>();
@@ -99,6 +122,9 @@ public class DialogueGraphView : GraphView
             return;
         }
 
+        // If the name already exists, add the node to the list of nodes with the same name (there will be a duplicate)
+        RepeatedNamesAmount++;
+
         List<DialogueNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
         groupedNodesList.Add(node);
         Color errorColor = groupedNodes[group][nodeName].ErrorData.Color;
@@ -136,16 +162,18 @@ public class DialogueGraphView : GraphView
                 groupedNodes.Remove(group);
             }
         }
-        else if (groupedNodesList.Count == 1)
+        else
         {
-            // Reset the style of the remaining node if there is only one node with the same name
-            groupedNodesList[0].ResetStyle();
+            // The node was in an error state, we need to decrement the repeated names amount
+            RepeatedNamesAmount--;
+
+            if (groupedNodesList.Count == 1)
+            {
+                // Reset the style of the remaining node if there is only one node with the same name
+                groupedNodesList[0].ResetStyle();
+            }
         }
     }
-
-    #endregion
-
-    #region Ungrouped Nodes
 
     public void AddUngroupedNode(DialogueNode node)
     {
@@ -161,10 +189,11 @@ public class DialogueGraphView : GraphView
             return;
         }
 
-        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
-
         // If the name already exists, add the node to the list of nodes with the same name
         // This is used to show the error message when there are nodes with the same name
+        RepeatedNamesAmount++;
+
+        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
         ungroupedNodesList.Add(node);
         node.SetErrorStyle(ungroupedNodes[nodeName].ErrorData.Color);
         if (ungroupedNodes[nodeName].Nodes.Count > 1)
@@ -196,12 +225,101 @@ public class DialogueGraphView : GraphView
         {
             ungroupedNodes.Remove(nodeName);
         }
-        else if (ungroupedNodesList.Count == 1)
+        else
         {
-            ungroupedNodesList[0].ResetStyle();
+            // The node was in an error state, we need to decrement the repeated names amount
+            RepeatedNamesAmount--;
+            if (ungroupedNodesList.Count == 1)
+            {
+                ungroupedNodesList[0].ResetStyle();
+            }
         }
     }
 
+    #endregion
+
+    #region Groups
+    private IManipulator CreateGroupContextualMenu()
+    {
+        ContextualMenuManipulator contextualMenu = new ContextualMenuManipulator((evt) =>
+        {
+            evt.menu.AppendAction("Add Group", (e) => CreateGroup("DialogueGroup", e.eventInfo.localMousePosition));
+        });
+        return contextualMenu;
+    }
+
+    private DialogueGroup CreateGroup(string title, Vector2 position)
+    {
+        DialogueGroup group = new DialogueGroup(title, position);
+        AddGroup(group);
+        AddElement(group);
+
+        foreach (GraphElement graphElement in selection)
+        {
+            if (graphElement is DialogueNode node)
+            {
+                group.AddElement(node);
+            }
+        }
+
+        return group;
+    }
+
+    private void AddGroup(DialogueGroup group)
+    {
+        string groupName = group.title;
+        if (!groups.ContainsKey(groupName))
+        {
+            DialogueGroupErrorData groupErrorData = new();
+            groupErrorData.Groups.Add(group);
+            groups.Add(groupName, groupErrorData);
+            return;
+        }
+
+        // The name already exists
+        RepeatedNamesAmount++;
+
+        List<DialogueGroup> groupList = groups[groupName].Groups;
+        groupList.Add(group);
+        Color errorColor = groups[groupName].ErrorData.Color;
+        group.SetErrorStyle(errorColor);
+
+        if (groupList.Count > 1)
+        {
+            foreach (DialogueGroup g in groupList)
+            {
+                g.SetErrorStyle(errorColor);
+            }
+        }
+        else
+        {
+            group.ResetStyle();
+        }
+    }
+
+    private void RemoveGroup(DialogueGroup group)
+    {
+        string oldGroupName = group.oldTitle;
+        List<DialogueGroup> groupsList = groups[oldGroupName].Groups;
+        groupsList.Remove(group);
+        group.ResetStyle();
+
+        if (groupsList.Count > 0)
+        {
+            RepeatedNamesAmount--;
+        }
+
+        if (groupsList.Count == 1)
+        {
+            groupsList[0].ResetStyle();
+            return;
+        }
+
+        if (groupsList.Count == 0)
+        {
+            groups.Remove(oldGroupName);
+        }
+    }
     #endregion
 
     #region Callbacks
@@ -319,82 +437,6 @@ public class DialogueGraphView : GraphView
         };
     }
 
-    #endregion
-
-    #region Groups
-    private IManipulator CreateGroupContextualMenu()
-    {
-        ContextualMenuManipulator contextualMenu = new ContextualMenuManipulator((evt) =>
-        {
-            evt.menu.AppendAction("Add Group", (e) => CreateGroup("DialogueGroup", e.eventInfo.localMousePosition));
-        });
-        return contextualMenu;
-    }
-
-    private DialogueGroup CreateGroup(string title, Vector2 position)
-    {
-        DialogueGroup group = new DialogueGroup(title, position);
-        AddGroup(group);
-        AddElement(group);
-
-        foreach (GraphElement graphElement in selection)
-        {
-            if (graphElement is DialogueNode node)
-            {
-                group.AddElement(node);
-            }
-        }
-
-        return group;
-    }
-
-    private void AddGroup(DialogueGroup group)
-    {
-        string groupName = group.title;
-        if (!groups.ContainsKey(groupName))
-        {
-            DialogueGroupErrorData groupErrorData = new();
-            groupErrorData.Groups.Add(group);
-            groups.Add(groupName, groupErrorData);
-            return;
-        }
-
-        List<DialogueGroup> groupList = groups[groupName].Groups;
-        groupList.Add(group);
-        Color errorColor = groups[groupName].ErrorData.Color;
-        group.SetErrorStyle(errorColor);
-
-        if (groupList.Count > 1)
-        {
-            foreach (DialogueGroup g in groupList)
-            {
-                g.SetErrorStyle(errorColor);
-            }
-        }
-        else
-        {
-            group.ResetStyle();
-        }
-    }
-
-    private void RemoveGroup(DialogueGroup group)
-    {
-        string oldGroupName = group.oldTitle;
-        List<DialogueGroup> groupsList = groups[oldGroupName].Groups;
-        groupsList.Remove(group);
-        group.ResetStyle();
-
-        if (groupsList.Count == 1)
-        {
-            groupsList[0].ResetStyle();
-            return;
-        }
-
-        if (groupsList.Count == 0)
-        {
-            groups.Remove(oldGroupName);
-        }
-    }
     #endregion
 
     #region Styles and Background
