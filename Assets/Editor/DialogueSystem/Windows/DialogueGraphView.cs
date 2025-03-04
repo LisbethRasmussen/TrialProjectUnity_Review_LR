@@ -211,13 +211,24 @@ public class DialogueGraphView : GraphView
         deleteSelection = (operationName, askUser) =>
         {
             Type groupType = typeof(DialogueGroup);
+            Type edgeType = typeof(Edge);
+
             List<DialogueNode> nodesToDelete = new();
             List<DialogueGroup> groupsToDelete = new();
+            List<Edge> edgesToDelete = new();
+
             foreach (ISelectable selectedElement in selection)
             {
                 if (selectedElement is DialogueNode node)
                 {
                     nodesToDelete.Add(node);
+                    continue;
+                }
+
+                if (selectedElement.GetType() == edgeType)
+                {
+                    Edge edge = (Edge)selectedElement;
+                    edgesToDelete.Add(edge);
                     continue;
                 }
 
@@ -230,9 +241,22 @@ public class DialogueGraphView : GraphView
 
             foreach (DialogueGroup group in groupsToDelete)
             {
+                List<DialogueNode> groupNodes = new();
+
+                foreach (GraphElement element in group.containedElements)
+                {
+                    if (element is DialogueNode node)
+                    {
+                        groupNodes.Add(node);
+                    }
+                }
+
+                group.RemoveElements(groupNodes);
                 RemoveGroup(group);
                 RemoveElement(group);
             }
+
+            DeleteElements(edgesToDelete);
 
             foreach (DialogueNode node in nodesToDelete)
             {
@@ -302,7 +326,7 @@ public class DialogueGraphView : GraphView
     {
         ContextualMenuManipulator contextualMenu = new ContextualMenuManipulator((evt) =>
         {
-            evt.menu.AppendAction("Add Group", (e) => AddElement(CreateGroup("DialogueGroup", e.eventInfo.localMousePosition)));
+            evt.menu.AppendAction("Add Group", (e) => CreateGroup("DialogueGroup", e.eventInfo.localMousePosition));
         });
         return contextualMenu;
     }
@@ -311,6 +335,16 @@ public class DialogueGraphView : GraphView
     {
         DialogueGroup group = new DialogueGroup(title, position);
         AddGroup(group);
+        AddElement(group);
+
+        foreach (GraphElement graphElement in selection)
+        {
+            if (graphElement is DialogueNode node)
+            {
+                group.AddElement(node);
+            }
+        }
+
         return group;
     }
 
