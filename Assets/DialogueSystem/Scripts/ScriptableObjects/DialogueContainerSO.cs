@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DialogueContainerSO : ScriptableObject
 {
-    public string FileName { get; set; }
-    public SerializableDictionary<DialogueGroupSO, List<DialogueSO>> DialogueGroups { get; set; }
-    public List<DialogueSO> UngroupedDialogues { get; set; }
+    [field: SerializeField] public string FileName { get; set; }
+    [field: SerializeField] public SerializableDictionary<DialogueGroupSO, List<DialogueSO>> DialogueGroups { get; set; }
+    [field: SerializeField] public List<DialogueSO> UngroupedDialogues { get; set; }
 
 
     public void Initialize(string fileName)
