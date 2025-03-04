@@ -132,7 +132,7 @@ public class DialogueInspector : Editor
         DialogueSO oldDialogue = dialogueProperty.objectReferenceValue as DialogueSO;
         string oldDialogueName = oldDialogue == null ? string.Empty : oldDialogue.name;
         UpdateIndexOnDialogueGroupUpdate(dialogueNames, selectedDialogueIndexProperty, oldSelectedDialogueIndex, oldDialogueName, oldDialogue == null);
-        selectedDialogueIndexProperty.DrawPopup("Dialogue", new string[] { "1", "2" });
+        selectedDialogueIndexProperty.DrawPopup("Dialogue", dialogueNames.ToArray());
         string selectedDialogueName = dialogueNames[selectedDialogueIndexProperty.intValue];
         DialogueSO selectedDialogue = DialogueIOUtility.LoadAsset<DialogueSO>(dialogueFolderPath, selectedDialogueName);
         dialogueProperty.objectReferenceValue = selectedDialogue;
