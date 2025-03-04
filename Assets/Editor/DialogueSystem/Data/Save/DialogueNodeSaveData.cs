@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class DialogueNodeSaveData
 {
     [field: SerializeField] public string ID { get; set; }

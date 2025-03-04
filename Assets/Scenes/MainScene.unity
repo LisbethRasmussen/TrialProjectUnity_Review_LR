@@ -1463,13 +1463,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786c606ebc6e7e74fb83e41665fec171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueContainer: {fileID: 11400000, guid: 11d0b3bf8d06737499a8c92bddb47584, type: 2}
+  dialogueContainer: {fileID: 0}
   dialogueGroup: {fileID: 11400000, guid: e76459c4fc944d44289e79c8c2272f01, type: 2}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 2a2fe532144b3c5479a2e39c388d25e3, type: 2}
   groupedDialogues: 0
-  startingDialogueOnly: 0
+  startingDialogueOnly: 1
   selectedDialogueGroupIndex: 1
-  selectedDialogueIndex: 1
+  selectedDialogueIndex: 0
 --- !u!4 &306645760
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DialogueEditorWindow : EditorWindow
@@ -70,10 +71,12 @@ public class DialogueEditorWindow : EditorWindow
 
         if (string.IsNullOrEmpty(path))
         {
+            Debug.LogWarning("Invalid file path");
             return;
         }
 
         Clear();
+        Debug.Log($"Initializing loading graph {path} ({Path.GetFileNameWithoutExtension(path)})");
         DialogueIOUtility.Initialize(graphView, Path.GetFileNameWithoutExtension(path));
         DialogueIOUtility.Load();
     }
