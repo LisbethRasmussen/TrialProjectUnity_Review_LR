@@ -11,6 +11,7 @@ public class DialogueNode : Node
     [field: SerializeField] public string DialogueText { get; set; }
     [field: SerializeField] public List<string> Choices { get; set; }
     [field: SerializeField] public DialogueType Type { get; set; }
+    [field: SerializeField] public Group Group { get; set; }
 
     private DialogueGraphView graphView;
     private Color defaultBackgroundColor;
@@ -34,10 +35,22 @@ public class DialogueNode : Node
     public virtual void Draw()
     {
         // Title container
-        TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, evt => {
-            graphView.RemoveUngroupedNode(this);
-            DialogueName = evt.newValue;
-            graphView.AddUngroupedNode(this);
+        TextField dialogueNameTextField = DialogueElementUtility.CreateTextField(DialogueName, evt =>
+        {
+            if (Group == null)
+            {
+                graphView.RemoveUngroupedNode(this);
+                DialogueName = evt.newValue;
+                graphView.AddUngroupedNode(this);
+            }
+            else
+            {
+                // Save the current group, cause it will be removed when the node is removed
+                Group currentGroup = Group;
+                graphView.RemoveGroupedNode(this, Group);
+                DialogueName = evt.newValue;
+                graphView.AddGroupedNode(this, currentGroup);
+            }
         });
         dialogueNameTextField.AddClasses(
             "ds-node__textfield",
