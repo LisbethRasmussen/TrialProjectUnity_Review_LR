@@ -163,7 +163,7 @@ public class DialogueNode : Node
     {
         Port inputPort = inputContainer.Children().First() as Port;
 
-        return inputPort.connected;
+        return !inputPort.connected;
     }
     #endregion
 }
