@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Dialogue : MonoBehaviour
@@ -20,11 +21,41 @@ public class Dialogue : MonoBehaviour
     private bool firstCall = true;
     private DialogueSO currentDialogue;
 
+    private int lastDialogueIndex;
+    private List<DialogueSO> dialoguesHistory;
+
     #region Initialization Methods
     private void Start()
     {
-        currentDialogue = dialogue;
+        ResetToFirstDialogue();
     }
+    #endregion
+
+    #region Getters
+
+    public bool IsStartOfDialogue() => firstCall;
+
+    public bool IsEndOfDialogue() => currentDialogue.Choices.Count == 0;
+
+    public bool IsChoiceAvailable() => currentDialogue.Choices.Count > 1;
+
+    public List<string> GetCurrentChoices()
+    {
+        if (IsChoiceAvailable())
+        {
+            Debug.LogWarning("Tried to get the choices but there are no choices available!");
+            return null;
+        }
+
+        List<string> choices = new();
+        foreach (var choice in currentDialogue.Choices)
+        {
+            choices.Add(choice.Text);
+        }
+
+        return choices;
+    }
+
     #endregion
 
     #region Dialogue Control Methods
@@ -34,9 +65,18 @@ public class Dialogue : MonoBehaviour
     /// <strong>If this is the first time you're iterating on this dialogue, it will return the first dialogue.</strong> You don't have to call GetCurrent() for the first one.<br/>
     /// </summary>
     /// <param name="choiceNumber">Move with this choice index. This parameter is ignored if the current dialogue is single-choice.</param>
+    /// <returns>Returns the dialogue if there is one. Returns null if you reached the end.</returns>
     public DialogueSO GetNext(int choice = 0)
     {
-        throw new System.NotImplementedException();
+        if (firstCall)
+        {
+            // First call, return the current dialogue without moving, otherwise it would be skipped.
+            firstCall = false;
+            return currentDialogue;
+        }
+
+        MoveNext(choice);
+        return currentDialogue;
     }
 
     /// <summary>
@@ -46,7 +86,10 @@ public class Dialogue : MonoBehaviour
     /// </summary>
     public DialogueSO GetCurrentNext(int choice = 0)
     {
-        throw new System.NotImplementedException();
+        firstCall = false;
+        DialogueSO current = currentDialogue;
+        MoveNext(choice);
+        return current;
     }
 
     /// <summary>
@@ -54,7 +97,7 @@ public class Dialogue : MonoBehaviour
     /// </summary>
     public DialogueSO GetCurrent()
     {
-        throw new System.NotImplementedException();
+        return currentDialogue;
     }
 
     /// <summary>
@@ -65,17 +108,30 @@ public class Dialogue : MonoBehaviour
     /// <returns></returns>
     public DialogueSO GetBack()
     {
-        throw new System.NotImplementedException();
-    }
+        // If there are no dialogues in the history, return null
+        if (lastDialogueIndex < 0)
+        {
+            return null;
+        }
 
+        MoveBack();
+
+        return currentDialogue;
+    }
+    #endregion
+
+    #region Moving Helper Methods
     /// <summary>
     /// Moves the dialogue selection to the first dialogue. This will guarantees that the next GetNext() call returns the first dialogue.<br/>
     /// The first dialogue corresponds to the selected dialogue in the inspector.<br/>
     /// You don't need to call this method if this is the first time you're iterating through the dialogue.<br/>
     /// </summary>
-    public void MoveToFirstDialogue()
+    public void ResetToFirstDialogue()
     {
-        throw new System.NotImplementedException();
+        firstCall = true;
+        lastDialogueIndex = -1;
+        currentDialogue = dialogue;
+        dialoguesHistory = new List<DialogueSO>();
     }
 
     /// <summary>
@@ -84,8 +140,38 @@ public class Dialogue : MonoBehaviour
     /// <param name="choiceNumber">If you're currently at a multi-choice node, provide the selected option.</param>
     public void MoveNext(int choice = 0)
     {
-        throw new System.NotImplementedException();
+        if (IsEndOfDialogue())
+        {
+            Debug.LogWarning("Tried to get the next dialogue but you reached the end!");
+            return;
+        }
+
+        if (choice < 0 || choice >= currentDialogue.Choices.Count)
+        {
+            Debug.LogError($"Choice index was invalid! You choose the choice {choice} and there are {currentDialogue.Choices.Count}." +
+                (choice < 0 ? "\nAnd no, negative indexes don't count..." : ""));
+            return;
+        }
+
+        dialoguesHistory.Add(currentDialogue);
+        lastDialogueIndex++;
+
+        currentDialogue = currentDialogue.Choices[choice].NextDialogue;
     }
 
+    /// <summary>
+    /// Moves back to the previous dialogue. The history is written when the dialogue progresses.<br/>
+    /// </summary>
+    public void MoveBack()
+    {
+        if (lastDialogueIndex < 0)
+        {
+            Debug.LogWarning("There are no dialogues in the history to move back to.");
+            return;
+        }
+
+        currentDialogue = dialoguesHistory[lastDialogueIndex];
+        lastDialogueIndex--;
+    }
     #endregion
 }
