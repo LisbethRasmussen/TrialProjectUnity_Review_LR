@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: ThebranchBeginning
   <Text>k__BackingField: DialogueText
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: opt1
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4528205f90fdf044d817095f6ae601ee, type: 2}
+  - <Text>k__BackingField: opt2
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 25d5279b4e03d784faa6d66341f9edec, type: 2}
   <Type>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1

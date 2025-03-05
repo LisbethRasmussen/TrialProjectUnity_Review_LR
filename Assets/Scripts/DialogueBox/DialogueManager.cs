@@ -18,7 +18,7 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] private InputActionReference _continueAction;
     [Space]
     [SerializeField] private CanvasGroup _optionsPanel;
-    [SerializeField] private DialogueOption _optionPrefab;
+    [SerializeField] private DialogueOptionKnitting _optionPrefab;
 
     private RectTransform _rectTransform;
     private int _optionSelected = 0;
@@ -144,7 +144,7 @@ public class DialogueManager : Singleton<DialogueManager>
         int optionIndex = 0;
         foreach (var nextNode in currentNode.GetNextNodes())
         {
-            DialogueOption option = Instantiate(_optionPrefab, _optionsPanel.transform);
+            DialogueOptionKnitting option = Instantiate(_optionPrefab, _optionsPanel.transform);
             option.MakeOption(nextNode.display, optionIndex, this);
             optionIndex++;
         }

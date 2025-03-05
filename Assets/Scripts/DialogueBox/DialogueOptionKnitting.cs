@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DialogueOption : MonoBehaviour, IPointerClickHandler
+public class DialogueOptionKnitting : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private TextMeshProUGUI _optionText;
 
