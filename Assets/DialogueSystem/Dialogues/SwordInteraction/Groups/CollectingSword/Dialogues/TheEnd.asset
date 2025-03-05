@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588f1ddba849ea94ab895833ea71023f, type: 3}
-  m_Name: 2
+  m_Name: TheEnd
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 2
-  <Text>k__BackingField: yoooooooooooo
+  <DialogueName>k__BackingField: TheEnd
+  <Text>k__BackingField: In the end, you still interacted with the sword.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8f01da9ea3904d0449419e53e3a02cc5, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
