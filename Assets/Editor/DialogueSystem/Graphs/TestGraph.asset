@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
     <Name>k__BackingField: Firstgroup
-    <Position>k__BackingField: {x: 142, y: 118}
+    <Position>k__BackingField: {x: 142.00006, y: 118.000015}
   - <ID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Name>k__BackingField: SecondSmallGroup
     <Position>k__BackingField: {x: 121, y: -551}
@@ -43,28 +43,19 @@ MonoBehaviour:
     <Name>k__BackingField: Branching
     <Text>k__BackingField: You must choose your path
     <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: Choice1
       <NodeID>k__BackingField: b358b8f2-daa2-4f6a-959e-eb6652ee5755
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: Choice2
       <NodeID>k__BackingField: 67e712d9-227f-4db7-b527-eb855afe8ec2
     <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
     <Type>k__BackingField: 1
     <Position>k__BackingField: {x: 806, y: 177}
-  - <ID>k__BackingField: 67e712d9-227f-4db7-b527-eb855afe8ec2
-    <Name>k__BackingField: Option2
-    <Text>k__BackingField: yoaoaoooooooooo
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
-    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
-    <Type>k__BackingField: 0
-    <Position>k__BackingField: {x: 1179, y: 368}
   - <ID>k__BackingField: b358b8f2-daa2-4f6a-959e-eb6652ee5755
     <Name>k__BackingField: Option1
     <Text>k__BackingField: yoooooooo
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
+      <NodeID>k__BackingField: dafe4aa6-d761-4fa4-a7c6-2deb0ef307a5
     <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 1179, y: 177}
@@ -124,6 +115,26 @@ MonoBehaviour:
     <GroupID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 819, y: -492}
+  - <ID>k__BackingField: 67e712d9-227f-4db7-b527-eb855afe8ec2
+    <Name>k__BackingField: Option2
+    <Text>k__BackingField: yoaoaoooooooooo that was option 2 you chose there
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: dafe4aa6-d761-4fa4-a7c6-2deb0ef307a5
+    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: 1179, y: 368}
+  - <ID>k__BackingField: dafe4aa6-d761-4fa4-a7c6-2deb0ef307a5
+    <Name>k__BackingField: Okay
+    <Text>k__BackingField: But honestly that doesn't matter. Here is a very long
+      dialogue message so you can see how the box react to very long speeches. Yes
+      I'm talking a lot, that's normal. VERY normal.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: 1612, y: 261}
   <OldGroupNames>k__BackingField:
   - Firstgroup
   - SecondSmallGroup
@@ -137,8 +148,9 @@ MonoBehaviour:
       - DialogueName
       - 2
       - Branching
-      - Option2
       - Option1
+      - Option2
+      - Okay
     - Key: SecondSmallGroup
       Value:
       - ThebranchBeginning

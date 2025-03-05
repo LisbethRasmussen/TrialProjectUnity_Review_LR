@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: Branching
   <Text>k__BackingField: You must choose your path
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Choice1
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: cbbc69839d0407e468aa8b7ddbc74f3e, type: 2}
+  - <Text>k__BackingField: Choice2
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 33d1ed2764740de4a9751c5801fdf4cb, type: 2}
   <Type>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0

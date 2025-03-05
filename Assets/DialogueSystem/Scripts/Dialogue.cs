@@ -25,23 +25,36 @@ public class Dialogue : MonoBehaviour
     private List<DialogueSO> dialoguesHistory;
 
     #region Initialization Methods
-    private void Start()
+    private void Awake()
     {
+        Debug.Log($"Dialogue is {dialogue}");
         ResetToFirstDialogue();
     }
     #endregion
 
     #region Getters
 
+    public bool IsInitialized() => currentDialogue != null;
+
     public bool IsStartOfDialogue() => firstCall;
 
-    public bool IsEndOfDialogue() => currentDialogue.Choices.Count == 0;
+    public bool IsEndOfDialogue() => currentDialogue.Choices.Count == 1 && currentDialogue.Choices[0].NextDialogue == null;
+
+    public bool IsEndOfDialogue(int conditionalChoice)
+    {
+        if (currentDialogue.Type == DialogueType.MultipleChoice)
+        {
+            return currentDialogue.Choices[conditionalChoice].NextDialogue == null;
+        }
+
+        return IsEndOfDialogue();
+    }
 
     public bool IsChoiceAvailable() => currentDialogue.Choices.Count > 1;
 
     public List<string> GetCurrentChoices()
     {
-        if (IsChoiceAvailable())
+        if (!IsChoiceAvailable())
         {
             Debug.LogWarning("Tried to get the choices but there are no choices available!");
             return null;
@@ -75,21 +88,14 @@ public class Dialogue : MonoBehaviour
             return currentDialogue;
         }
 
-        MoveNext(choice);
-        return currentDialogue;
-    }
+        if (IsEndOfDialogue(choice))
+        {
+            return null;
+        }
 
-    /// <summary>
-    /// Returns the current dialogue and move to the next.<br/>
-    /// This returns the current one instead of GetNext() that returns the next.<br/>
-    /// I don't recommend using this <strong>especially if you have multi-choice dialogue nodes</strong>. You'll be forced to select a choice before even displaying the dialogue.<br/>
-    /// </summary>
-    public DialogueSO GetCurrentNext(int choice = 0)
-    {
-        firstCall = false;
-        DialogueSO current = currentDialogue;
         MoveNext(choice);
-        return current;
+
+        return currentDialogue;
     }
 
     /// <summary>
@@ -140,23 +146,35 @@ public class Dialogue : MonoBehaviour
     /// <param name="choiceNumber">If you're currently at a multi-choice node, provide the selected option.</param>
     public void MoveNext(int choice = 0)
     {
-        if (IsEndOfDialogue())
+        if (IsEndOfDialogue(choice))
         {
             Debug.LogWarning("Tried to get the next dialogue but you reached the end!");
             return;
         }
 
-        if (choice < 0 || choice >= currentDialogue.Choices.Count)
+        if (currentDialogue.Type == DialogueType.MultipleChoice)
         {
-            Debug.LogError($"Choice index was invalid! You choose the choice {choice} and there are {currentDialogue.Choices.Count}." +
-                (choice < 0 ? "\nAnd no, negative indexes don't count..." : ""));
-            return;
+            // Multiple Choice
+            if (choice < 0 || choice >= currentDialogue.Choices.Count)
+            {
+                Debug.LogError($"Choice index was invalid! You choose the choice {choice} and there are {currentDialogue.Choices.Count}." +
+                    (choice < 0 ? "\nAnd no, negative indexes don't count..." : ""));
+                return;
+            }
+
+            dialoguesHistory.Add(currentDialogue);
+            lastDialogueIndex++;
+
+            currentDialogue = currentDialogue.Choices[choice].NextDialogue;
         }
+        else
+        {
+            // Single Choice
+            dialoguesHistory.Add(currentDialogue);
+            lastDialogueIndex++;
 
-        dialoguesHistory.Add(currentDialogue);
-        lastDialogueIndex++;
-
-        currentDialogue = currentDialogue.Choices[choice].NextDialogue;
+            currentDialogue = currentDialogue.Choices[0].NextDialogue;
+        }
     }
 
     /// <summary>

@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName
   <Text>k__BackingField: Yahoo
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Next Dialogue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 84c98030eb4e33f429e9b1005b8165a9, type: 2}
   <Type>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 1

@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: SmallStoryPart2
   <Text>k__BackingField: Part 2
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Next Dialogue
+    <NextDialogue>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
