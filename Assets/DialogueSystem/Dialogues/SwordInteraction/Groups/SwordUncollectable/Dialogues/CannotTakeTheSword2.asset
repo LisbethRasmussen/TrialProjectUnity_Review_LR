@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588f1ddba849ea94ab895833ea71023f, type: 3}
-  m_Name: CollectingSword
+  m_Name: CannotTakeTheSword2
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: CollectingSword
-  <Text>k__BackingField: Whereas you still feel unworthy of the sword, you reflect
-    about taking possesion of it. You are unaware of the responsabilities that are
-    coming along with it.
+  <DialogueName>k__BackingField: CannotTakeTheSword2
+  <Text>k__BackingField: In order to be worthy of the sword, you must collect the
+    coin that lies on the elevated part of the plains.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 0539dbfb02935c54885036991c90a1a3, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 0
-  <IsStartingDialogue>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0

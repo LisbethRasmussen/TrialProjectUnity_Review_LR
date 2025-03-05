@@ -16,40 +16,11 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
     <Name>k__BackingField: SwordUncollectable
-    <Position>k__BackingField: {x: 141.99994, y: 116}
+    <Position>k__BackingField: {x: -217, y: 116}
   - <ID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Name>k__BackingField: CollectingSword
     <Position>k__BackingField: {x: -397, y: -705}
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 00cdec9e-abc2-4013-9c80-7b83a732d486
-    <Name>k__BackingField: DialogueName
-    <Text>k__BackingField: Yahoo
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 589ddf9d-b46d-4312-9548-15a6206cc5ef
-    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
-    <Type>k__BackingField: 0
-    <Position>k__BackingField: {x: 167, y: 199}
-  - <ID>k__BackingField: 589ddf9d-b46d-4312-9548-15a6206cc5ef
-    <Name>k__BackingField: 2
-    <Text>k__BackingField: yoooooooooooo
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: eca3207b-1c67-44f2-8077-8099cdf5a9e3
-    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
-    <Type>k__BackingField: 0
-    <Position>k__BackingField: {x: 512, y: 199}
-  - <ID>k__BackingField: eca3207b-1c67-44f2-8077-8099cdf5a9e3
-    <Name>k__BackingField: Branching
-    <Text>k__BackingField: You must choose your path
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Choice1
-      <NodeID>k__BackingField: b358b8f2-daa2-4f6a-959e-eb6652ee5755
-    - <Text>k__BackingField: Choice2
-      <NodeID>k__BackingField: 67e712d9-227f-4db7-b527-eb855afe8ec2
-    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
-    <Type>k__BackingField: 1
-    <Position>k__BackingField: {x: 806, y: 175}
   - <ID>k__BackingField: b358b8f2-daa2-4f6a-959e-eb6652ee5755
     <Name>k__BackingField: Option1
     <Text>k__BackingField: yoooooooo
@@ -83,7 +54,7 @@ MonoBehaviour:
     <Name>k__BackingField: CollectingSword
     <Text>k__BackingField: Whereas you still feel unworthy of the sword, you reflect
       about taking possesion of it. You are unaware of the responsabilities that
-      comes along it.
+      are coming along with it.
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
       <NodeID>k__BackingField: 9188b31d-dae4-44c2-86f2-fdbf27d85078
@@ -109,7 +80,7 @@ MonoBehaviour:
     <Text>k__BackingField: You choose to take the sword.
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
+      <NodeID>k__BackingField: 50807d23-24f6-40d8-a4b0-131f0e6072d3
     <GroupID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 401, y: -562}
@@ -119,10 +90,49 @@ MonoBehaviour:
       or cowardice? Nobody will ever know.
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
+      <NodeID>k__BackingField: 50807d23-24f6-40d8-a4b0-131f0e6072d3
     <GroupID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 401, y: -379}
+  - <ID>k__BackingField: 50807d23-24f6-40d8-a4b0-131f0e6072d3
+    <Name>k__BackingField: TheEnd
+    <Text>k__BackingField: In the end, you still interacted with the sword.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: 1052, y: -518}
+  - <ID>k__BackingField: 00cdec9e-abc2-4013-9c80-7b83a732d486
+    <Name>k__BackingField: CannotTakeTheSword
+    <Text>k__BackingField: It seems you cannot take the sword yet.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 589ddf9d-b46d-4312-9548-15a6206cc5ef
+    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: -192, y: 199}
+  - <ID>k__BackingField: eca3207b-1c67-44f2-8077-8099cdf5a9e3
+    <Name>k__BackingField: Branching
+    <Text>k__BackingField: You must choose your path
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Choice1
+      <NodeID>k__BackingField: b358b8f2-daa2-4f6a-959e-eb6652ee5755
+    - <Text>k__BackingField: Choice2
+      <NodeID>k__BackingField: 67e712d9-227f-4db7-b527-eb855afe8ec2
+    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
+    <Type>k__BackingField: 1
+    <Position>k__BackingField: {x: 806, y: 175}
+  - <ID>k__BackingField: 589ddf9d-b46d-4312-9548-15a6206cc5ef
+    <Name>k__BackingField: CannotTakeTheSword2
+    <Text>k__BackingField: In order to be worthy of the sword, you must collect the
+      coin that lies on the elevated part of the plains.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: 122, y: 199}
   <OldGroupNames>k__BackingField:
   - SwordUncollectable
   - CollectingSword
@@ -131,15 +141,16 @@ MonoBehaviour:
     list:
     - Key: SwordUncollectable
       Value:
-      - DialogueName
-      - 2
-      - Branching
       - Option1
       - Option2
       - Okay
+      - CannotTakeTheSword
+      - Branching
+      - CannotTakeTheSword2
     - Key: CollectingSword
       Value:
       - CollectingSword
       - CollectingSwordChoice
       - TakingTheSword
       - Refusing
+      - TheEnd

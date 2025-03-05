@@ -106,8 +106,6 @@ public static class DialogueIOUtility
             Name = group.title,
             Position = group.GetPosition().position
         };
-        Debug.Log(graphData);
-        Debug.Log(graphData.Groups);
         graphData.Groups.Add(groupSaveData);
     }
     #endregion
@@ -276,8 +274,6 @@ public static class DialogueIOUtility
             );
             return;
         }
-
-        Debug.Log("Found graph data: " + graphData);
 
         DialogueEditorWindow.UpdateFileName(graphData.FileName);
         LoadGroups(graphData.Groups);
