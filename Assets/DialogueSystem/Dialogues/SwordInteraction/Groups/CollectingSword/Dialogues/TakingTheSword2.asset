@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588f1ddba849ea94ab895833ea71023f, type: 3}
-  m_Name: TakingTheSword
+  m_Name: TakingTheSword2
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: TakingTheSword
-  <Text>k__BackingField: You choose to take the sword.
+  <DialogueName>k__BackingField: TakingTheSword2
+  <Text>k__BackingField: Unfortunately, the developer did nothing about it.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 3215cf1220b46604d8cc2c07dcac0aad, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 053c78f694b2f4c408a7960455060085, type: 2}
   <Type>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0

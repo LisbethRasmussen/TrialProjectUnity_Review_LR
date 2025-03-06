@@ -60,8 +60,6 @@ public class DialogueController : MonoBehaviour
         if (_dialogueRunning) return;
         _dialogueRunning = true;
 
-        Debug.Log("Start of dialogue");
-
         gameObject.SetActive(true);
 
         StartCoroutine(GoThroughDialogue(dialogue, _resetStoryOnDialogueStart));
@@ -85,7 +83,6 @@ public class DialogueController : MonoBehaviour
 
     private void EndDialogue()
     {
-        Debug.Log("End of dialogue");
         gameObject.SetActive(false);
         _dialogueRunning = false;
     }
@@ -101,7 +98,7 @@ public class DialogueController : MonoBehaviour
 
         if (!dialogue.IsInitialized())
         {
-            Debug.LogError("Dialogue is not initialized!");
+            Debug.LogError("Dialogue is not initialized! Avoid using it in awake if the dialogue is enabled at the same time.");
             yield break;
         }
 

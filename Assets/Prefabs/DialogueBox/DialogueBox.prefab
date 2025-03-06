@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 5411097817564795834}
   - component: {fileID: 2950787738161259304}
   - component: {fileID: 6276850449678539232}
+  - component: {fileID: 2490076174252159398}
   - component: {fileID: 7167553401128127475}
   m_Layer: 5
   m_Name: DialogueBox
@@ -281,10 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3880ed9907568489daa1a4d3da61fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timePerCharacterAnimation: 0.05
+  _timePerCharacterAnimation: 0.02
   _timePerOptionAnimation: 0.3
   _delayBetweenOptionsAnimation: 0.1
-  _resetStoryOnDialogueStart: 0
+  _resetStoryOnDialogueStart: 1
   _titleTextContainer: {fileID: 5161496943973686034}
   _titleText: {fileID: 8918493252161884119}
   _mainText: {fileID: 2927358558692814946}
@@ -321,6 +322,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.8
+--- !u!114 &2490076174252159398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4151400300597430004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d00918f1146ac647ada28abe2fb3b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueVariablesNamesSO: {fileID: 0}
 --- !u!114 &7167553401128127475
 MonoBehaviour:
   m_ObjectHideFlags: 0
