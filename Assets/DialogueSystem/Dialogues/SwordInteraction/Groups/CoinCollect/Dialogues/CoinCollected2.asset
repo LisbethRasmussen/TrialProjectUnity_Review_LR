@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588f1ddba849ea94ab895833ea71023f, type: 3}
-  m_Name: Okay
+  m_Name: CoinCollected2
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: Okay
-  <Text>k__BackingField: But honestly that doesn't matter. Here is a very long dialogue
-    message so you can see how the box react to very long speeches. Yes I'm talking
-    a lot, that's normal. VERY normal.
+  <DialogueName>k__BackingField: CoinCollected2
+  <Text>k__BackingField: You may now get the sword.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 0ef7d8e58370a5246ae531c19eb70740, type: 2}
   <Type>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0

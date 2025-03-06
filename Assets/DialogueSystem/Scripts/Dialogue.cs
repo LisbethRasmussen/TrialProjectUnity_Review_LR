@@ -27,7 +27,6 @@ public class Dialogue : MonoBehaviour
     #region Initialization Methods
     private void Awake()
     {
-        Debug.Log($"Dialogue is {dialogue}");
         ResetToFirstDialogue();
     }
     #endregion
@@ -38,7 +37,7 @@ public class Dialogue : MonoBehaviour
 
     public bool IsStartOfDialogue() => firstCall;
 
-    public bool IsEndOfDialogue() => currentDialogue.Choices.Count == 1 && currentDialogue.Choices[0].NextDialogue == null;
+    public bool IsEndOfDialogue() => !firstCall && currentDialogue.Choices.Count == 1 && currentDialogue.Choices[0].NextDialogue == null;
 
     public bool IsEndOfDialogue(int conditionalChoice)
     {
