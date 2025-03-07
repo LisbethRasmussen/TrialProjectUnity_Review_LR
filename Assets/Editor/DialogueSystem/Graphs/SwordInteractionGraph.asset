@@ -16,10 +16,10 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 982bda96-1c11-4d77-b1e0-6f5b6eb4cb92
     <Name>k__BackingField: SwordUncollectable
-    <Position>k__BackingField: {x: -395.99997, y: -997.9999}
+    <Position>k__BackingField: {x: -396, y: -998}
   - <ID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Name>k__BackingField: CollectingSword
-    <Position>k__BackingField: {x: -397, y: -704.99994}
+    <Position>k__BackingField: {x: -397, y: -705}
   - <ID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
     <Name>k__BackingField: CoinCollect
     <Position>k__BackingField: {x: -389, y: -144}
@@ -95,15 +95,6 @@ MonoBehaviour:
     <GroupID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 310, y: -85}
-  - <ID>k__BackingField: 4e95c2dc-bc88-49f6-b9cf-785ed8c3aa39
-    <Name>k__BackingField: AlreadyGotCoin
-    <Text>k__BackingField: You already own a coin. Don't be greedy!
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
-    <GroupID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
-    <Type>k__BackingField: 0
-    <Position>k__BackingField: {x: -364, y: 110}
   - <ID>k__BackingField: f7ca2224-a666-4d9e-b21d-dc23216a4372
     <Name>k__BackingField: TakingTheSword
     <Text>k__BackingField: You choose to take the sword.
@@ -141,6 +132,33 @@ MonoBehaviour:
     <GroupID>k__BackingField: 87d19035-7032-437e-8726-4e114e9c3c3a
     <Type>k__BackingField: 0
     <Position>k__BackingField: {x: 391, y: -431}
+  - <ID>k__BackingField: 5717faee-6a7d-4a75-b3ee-2ed67d07a476
+    <Name>k__BackingField: AlreadyGotCoin2
+    <Text>k__BackingField: You just, can't see it. The developer did not draw it.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 45d1d214-501a-4b65-99ce-ddd0be7b2573
+    <GroupID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: -28, y: 110}
+  - <ID>k__BackingField: 4e95c2dc-bc88-49f6-b9cf-785ed8c3aa39
+    <Name>k__BackingField: AlreadyGotCoin
+    <Text>k__BackingField: You already own a coin. Don't be greedy!
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 5717faee-6a7d-4a75-b3ee-2ed67d07a476
+    <GroupID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: -364, y: 110}
+  - <ID>k__BackingField: 45d1d214-501a-4b65-99ce-ddd0be7b2573
+    <Name>k__BackingField: AlreadyGotCoin3
+    <Text>k__BackingField: Yes, he's too lazy.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: a7520f91-e24f-4a72-85b7-ac244fb212d9
+    <Type>k__BackingField: 0
+    <Position>k__BackingField: {x: 350, y: 110}
   <OldGroupNames>k__BackingField:
   - SwordUncollectable
   - CollectingSword
@@ -165,4 +183,6 @@ MonoBehaviour:
       - CoinCollected1
       - CoinCollected2
       - CoinCollected3
+      - AlreadyGotCoin2
       - AlreadyGotCoin
+      - AlreadyGotCoin3
