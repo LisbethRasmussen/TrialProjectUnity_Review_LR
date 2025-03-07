@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ConditionalDialogue : TriggerableDialogue
 {
+    [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesSO;
+
     [Header("Condition(s)")]
-    [SerializeField] private List<Condition> _conditions;
+    [SerializeField] private Condition[] _conditions;
     [SerializeField] private ConditionType _conditionsToBeMet;
 
     [Header("Dialogues")]
@@ -14,9 +15,15 @@ public class ConditionalDialogue : TriggerableDialogue
 
     public override void Trigger()
     {
-        if (_conditions == null || _conditions.Count == 0)
+        if (_dialogueVariablesNamesSO == null)
         {
-            Debug.LogWarning("No conditions set for the conditional dialogue.");
+            Debug.LogWarning("No DialogueVariablesNamesSO assigned to this conditional dialogue.", gameObject);
+            return;
+        }
+
+        if (_conditions == null || _conditions.Length == 0)
+        {
+            Debug.LogWarning("No conditions set for this conditional dialogue.", gameObject);
             return;
         }
 
@@ -44,6 +51,10 @@ public class ConditionalDialogue : TriggerableDialogue
                 {
                     finalResult = true;
                     break;
+                }
+                else
+                {
+                    Debug.Log("Condition not met: " + condition);
                 }
             }
         }

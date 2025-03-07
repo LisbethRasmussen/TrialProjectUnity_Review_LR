@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Condition : MonoBehaviour
+public class Condition
 {
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesSO;
 
-    [SerializeField] private ValueType _conditionValueType;
+    [SerializeField] private DialogueVariableType _conditionValueType;
     [Space]
     [SerializeField] private string _boolKey;
     [SerializeField] private BoolComparisonType _boolComparisonType;
@@ -17,13 +17,14 @@ public class Condition : MonoBehaviour
     [SerializeField] private int _intValue;
     [Space]
     [SerializeField] private string _stringKey;
+    [SerializeField] private StringComparisonType _stringComparisonType;
     [SerializeField] private string _stringValue;
 
     public bool Evaluate()
     {
         switch (_conditionValueType)
         {
-            case ValueType.Bool:
+            case DialogueVariableType.Bool:
                 bool? value = DialogueVariables.GetBool(_boolKey);
 
                 if (value != null)
@@ -42,7 +43,7 @@ public class Condition : MonoBehaviour
                 Debug.LogError($"Bool variable with key '{_boolKey}' not found.");
                 break;
 
-            case ValueType.Int:
+            case DialogueVariableType.Int:
                 int? intValue = DialogueVariables.GetInt(_intKey);
 
                 if (intValue != null)
@@ -63,12 +64,20 @@ public class Condition : MonoBehaviour
                 Debug.LogError($"Int variable with key '{_intKey}' not found.");
                 break;
 
-            case ValueType.String:
+            case DialogueVariableType.String:
                 string stringValue = DialogueVariables.GetString(_stringKey);
 
                 if (stringValue != null)
                 {
-                    return stringValue == _stringValue;
+                    return _stringComparisonType switch
+                    {
+                        StringComparisonType.Equal => stringValue == _stringValue,
+                        StringComparisonType.NotEqual => stringValue != _stringValue,
+                        StringComparisonType.Contains => stringValue.Contains(_stringValue),
+                        StringComparisonType.StartsWith => stringValue.StartsWith(_stringValue),
+                        StringComparisonType.EndsWith => stringValue.EndsWith(_stringValue),
+                        _ => false
+                    };
                 }
 
                 Debug.LogError($"String variable with key '{_stringKey}' not found.");
@@ -78,7 +87,14 @@ public class Condition : MonoBehaviour
         return false;
     }
 
-    public enum ValueType
+    #region Evaluations
+
+
+
+    #endregion
+
+    #region Enums
+    public enum DialogueVariableType
     {
         Bool,
         Int,
@@ -103,4 +119,14 @@ public class Condition : MonoBehaviour
         Less,
         LessOrEqual
     }
+
+    public enum StringComparisonType
+    {
+        Equal,
+        NotEqual,
+        Contains,
+        StartsWith,
+        EndsWith
+    }
+    #endregion
 }

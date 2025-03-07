@@ -4,7 +4,7 @@ public class ConditionVariableModifier : MonoBehaviour
 {
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesSO;
 
-    [SerializeField] private Condition.ValueType _modifierValueType;
+    [SerializeField] private Condition.DialogueVariableType _modifierValueType;
     [Space]
     [SerializeField] private string _boolKey;
     [SerializeField] private BoolModifierType _boolModifierType;
@@ -22,7 +22,7 @@ public class ConditionVariableModifier : MonoBehaviour
     {
         switch (_modifierValueType)
         {
-            case Condition.ValueType.Bool:
+            case Condition.DialogueVariableType.Bool:
                 bool? boolValue = DialogueVariables.GetBool(_boolKey);
                 if (boolValue != null)
                 {
@@ -50,7 +50,7 @@ public class ConditionVariableModifier : MonoBehaviour
                     Debug.LogError($"Bool variable with key '{_boolKey}' not found.");
                 }
                 break;
-            case Condition.ValueType.Int:
+            case Condition.DialogueVariableType.Int:
                 int? intValue = DialogueVariables.GetInt(_intKey);
                 if (intValue != null)
                 {
@@ -78,7 +78,7 @@ public class ConditionVariableModifier : MonoBehaviour
                     Debug.LogError($"Int variable with key '{_intKey}' not found.");
                 }
                 break;
-            case Condition.ValueType.String:
+            case Condition.DialogueVariableType.String:
                 string stringValue = DialogueVariables.GetString(_stringKey);
                 if (stringValue != null)
                 {

@@ -66,10 +66,11 @@ public static class DialogueVariables
         }
     }
 
-    public enum VariableType
-    {
-        Bool,
-        Int,
-        String
-    }
+}
+
+public enum DialogueVariableType
+{
+    Bool,
+    Int,
+    String
 }

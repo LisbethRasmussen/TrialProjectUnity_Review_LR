@@ -58,21 +58,21 @@ public class ConditionInspector : Editor
 
         EditorGUILayout.Space(16);
 
-        switch ((Condition.ValueType)_conditionValueType.enumValueIndex)
+        switch ((Condition.DialogueVariableType)_conditionValueType.enumValueIndex)
         {
-            case Condition.ValueType.Bool:
-                DrawDropdownForPropertyAndType(_boolKey, Condition.ValueType.Bool);
+            case Condition.DialogueVariableType.Bool:
+                DrawDropdownForPropertyAndType(_boolKey, Condition.DialogueVariableType.Bool);
                 EditorGUILayout.PropertyField(_boolComparisonType);
                 EditorGUILayout.PropertyField(_boolValue);
                 break;
-            case Condition.ValueType.Int:
+            case Condition.DialogueVariableType.Int:
                 // Display the three properties aside each
-                DrawDropdownForPropertyAndType(_intKey, Condition.ValueType.Int);
+                DrawDropdownForPropertyAndType(_intKey, Condition.DialogueVariableType.Int);
                 EditorGUILayout.PropertyField(_intComparisonType);
                 EditorGUILayout.PropertyField(_intValue);
                 break;
-            case Condition.ValueType.String:
-                DrawDropdownForPropertyAndType(_stringKey, Condition.ValueType.String);
+            case Condition.DialogueVariableType.String:
+                DrawDropdownForPropertyAndType(_stringKey, Condition.DialogueVariableType.String);
                 EditorGUILayout.PropertyField(_stringValue);
                 break;
         }
@@ -80,7 +80,7 @@ public class ConditionInspector : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
-    private void DrawDropdownForPropertyAndType(SerializedProperty property, Condition.ValueType type)
+    private void DrawDropdownForPropertyAndType(SerializedProperty property, Condition.DialogueVariableType type)
     {
         // Get the names of the variables based on the type
         ConditionVariableNamesSO dialogueVariableNames = _dialogueVariablesNamesSO.objectReferenceValue as ConditionVariableNamesSO;

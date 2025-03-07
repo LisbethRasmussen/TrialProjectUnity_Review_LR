@@ -7,13 +7,13 @@ public class ConditionVariableNamesSO : ScriptableObject
     [field: SerializeField] public string[] IntVarNames { get; private set; }
     [field: SerializeField] public string[] StringVarNames { get; private set; }
 
-    public string[] GetVarNames(Condition.ValueType valueType)
+    public string[] GetVarNames(Condition.DialogueVariableType valueType)
     {
         return valueType switch
         {
-            Condition.ValueType.Bool => BoolVarNames,
-            Condition.ValueType.Int => IntVarNames,
-            Condition.ValueType.String => StringVarNames,
+            Condition.DialogueVariableType.Bool => BoolVarNames,
+            Condition.DialogueVariableType.Int => IntVarNames,
+            Condition.DialogueVariableType.String => StringVarNames,
             _ => null,
         };
     }

@@ -3098,7 +3098,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1208060883}
-  - component: {fileID: 1208060885}
   - component: {fileID: 1208060884}
   m_Layer: 0
   m_Name: ConditionalDialogue
@@ -3131,34 +3130,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208060882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6da42713d69024ca8b7f6d9f375f3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogueVariablesNamesSO: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
-  _conditionValueType: 0
-  _boolKey: gotTheChest
-  _boolComparisonType: 0
-  _boolValue: 1
-  _intKey: 
-  _intComparisionType: 0
-  _intValue: 0
-  _stringKey: 
-  _stringValue: 
---- !u!114 &1208060885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208060882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48dabc0b0019eb94f89f5bda40ff4098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dialogueVariablesNamesSO: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
   _conditions:
-  - {fileID: 1208060884}
-  _conditionsToBeMet: 0
+  - _dialogueVariablesNamesSO: {fileID: 0}
+    _conditionValueType: 0
+    _boolKey: gotTheChest
+    _boolComparisonType: 0
+    _boolValue: 1
+    _intKey: 
+    _intComparisionType: 0
+    _intValue: 0
+    _stringKey: 
+    _stringComparisonType: 0
+    _stringValue: 
+  _conditionsToBeMet: 1
   _dialogueOnTrue: {fileID: 209063943}
   _dialogueOnFalse: {fileID: 611434663}
 --- !u!198 &1255268402 stripped
@@ -3347,7 +3335,7 @@ MonoBehaviour:
   _onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1208060885}
+      - m_Target: {fileID: 1208060884}
         m_TargetAssemblyTypeName: ConditionalDialogue, Assembly-CSharp
         m_MethodName: Trigger
         m_Mode: 1
@@ -23502,6 +23490,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1375117891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1586041795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586041796}
+  - component: {fileID: 1586041797}
+  m_Layer: 0
+  m_Name: ConditionalDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1586041796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586041795}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.27, y: 5.754663, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1923179401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1586041797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586041795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48dabc0b0019eb94f89f5bda40ff4098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueVariablesNamesSO: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
+  _conditions:
+  - _dialogueVariablesNamesSO: {fileID: 0}
+    _conditionValueType: 0
+    _boolKey: gotTheChest
+    _boolComparisonType: 0
+    _boolValue: 0
+    _intKey: 
+    _intComparisionType: 0
+    _intValue: 0
+    _stringKey: 
+    _stringComparisonType: 0
+    _stringValue: 
+  _conditionsToBeMet: 1
+  _dialogueOnTrue: {fileID: 462216401}
+  _dialogueOnFalse: {fileID: 922569722}
 --- !u!1 &1593073806
 GameObject:
   m_ObjectHideFlags: 0
@@ -24441,8 +24489,6 @@ GameObject:
   - component: {fileID: 1923179401}
   - component: {fileID: 1923179400}
   - component: {fileID: 1923179402}
-  - component: {fileID: 1923179408}
-  - component: {fileID: 1923179407}
   - component: {fileID: 1923179409}
   - component: {fileID: 1923179404}
   - component: {fileID: 1923179403}
@@ -24521,6 +24567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1586041796}
   - {fileID: 462216399}
   - {fileID: 922569720}
   m_Father: {fileID: 0}
@@ -24540,7 +24587,7 @@ MonoBehaviour:
   _onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1923179408}
+      - m_Target: {fileID: 1586041797}
         m_TargetAssemblyTypeName: ConditionalDialogue, Assembly-CSharp
         m_MethodName: Trigger
         m_Mode: 1
@@ -24650,45 +24697,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1923179407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923179398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6da42713d69024ca8b7f6d9f375f3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogueVariablesNamesSO: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
-  _conditionValueType: 0
-  _boolKey: gotTheChest
-  _boolComparisonType: 0
-  _boolValue: 1
-  _intKey: punchedNpcs
-  _intComparisionType: 0
-  _intValue: 0
-  _stringKey: playerName
-  _stringValue: 
---- !u!114 &1923179408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923179398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48dabc0b0019eb94f89f5bda40ff4098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _conditions:
-  - {fileID: 1923179407}
-  _conditionsToBeMet: 1
-  _dialogueOnTrue: {fileID: 922569722}
-  _dialogueOnFalse: {fileID: 462216401}
 --- !u!114 &1923179409
 MonoBehaviour:
   m_ObjectHideFlags: 0
