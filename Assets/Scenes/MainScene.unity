@@ -3143,7 +3143,7 @@ MonoBehaviour:
     _intKey: 
     _intComparisionType: 0
     _intValue: 0
-    _stringKey: 
+    _stringKey: playerName
     _stringComparisonType: 0
     _stringValue: 
   _conditionsToBeMet: 1
@@ -3164,9 +3164,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1259228286}
   - component: {fileID: 1259228284}
+  - component: {fileID: 1259228289}
   - component: {fileID: 1259228288}
   - component: {fileID: 1259228287}
-  - component: {fileID: 1259228289}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -24921,10 +24921,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -550
       objectReference: {fileID: 0}
-    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
-      propertyPath: _dialogueVariablesNamesSO
-      value: 
-      objectReference: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
     - target: {fileID: 3826422838121473551, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

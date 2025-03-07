@@ -50,6 +50,13 @@ public class ConditionInspector : Editor
         {
             EditorGUILayout.HelpBox("Assign the DialogueVariableNamesSO scriptable object to get the variable names." +
                 "To create one, Right Click -> Dialogue -> Condition Names.", MessageType.Warning);
+
+            // Button to create a new DialogueVariableNamesSO
+            if (GUILayout.Button("Create Dialogue Variable Environment"))
+            {
+
+            }
+
             return;
         }
 

@@ -65,7 +65,6 @@ public static class DialogueVariables
             SetString(variable, string.Empty);
         }
     }
-
 }
 
 public enum DialogueVariableType
