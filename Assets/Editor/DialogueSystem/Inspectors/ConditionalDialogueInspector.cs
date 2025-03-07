@@ -49,6 +49,13 @@ public class ConditionalDialogueInspector : Editor
         {
             EditorGUILayout.HelpBox("Assign the DialogueVariableNamesSO scriptable object to get the variable names.\n" +
                 "To create one, Right Click -> Dialogue -> Condition Names.", MessageType.Warning);
+
+            // Button to create a new DialogueVariableNamesSO
+            if (GUILayout.Button("Create Dialogue Variable Environment"))
+            {
+                _dialogueVariablesNamesSO.objectReferenceValue = MakeNewVariableEnvironment();
+            }
+
             serializedObject.ApplyModifiedProperties();
             return;
         }
@@ -156,5 +163,26 @@ public class ConditionalDialogueInspector : Editor
         selected = Mathf.Clamp(selected, 0, variableNames.Length - 1);
 
         property.stringValue = variableNames[selected];
+    }
+
+    public static ConditionVariableNamesSO MakeNewVariableEnvironment()
+    {
+        string path = EditorUtility.SaveFilePanelInProject("Save Dialogue Variable Names", "DialogueVariableNames", "asset", "Save Dialogue Variable Names", "Assets/Resources");
+
+        if (path.Length == 0)
+        {
+            Debug.LogWarning("No path was selected to save the DialogueVariableNamesSO.");
+            return null;
+        }
+
+        // Create a new DialogueVariableNamesSO
+        ConditionVariableNamesSO dialogueVariablesNamesSO = ScriptableObject.CreateInstance<ConditionVariableNamesSO>();
+        dialogueVariablesNamesSO.name = "DialogueConditionVariableEnvironment";
+
+        // Save it in the Resources folder
+        AssetDatabase.CreateAsset(dialogueVariablesNamesSO, path);
+        AssetDatabase.SaveAssets();
+
+        return dialogueVariablesNamesSO;
     }
 }

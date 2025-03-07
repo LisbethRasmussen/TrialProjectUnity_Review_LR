@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d00918f1146ac647ada28abe2fb3b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueVariablesNamesSO: {fileID: 0}
+  _dialogueVariablesNamesSO: {fileID: 11400000, guid: c1348df03d8f9e94daf8750acdfc9210, type: 2}
 --- !u!114 &7167553401128127475
 MonoBehaviour:
   m_ObjectHideFlags: 0
