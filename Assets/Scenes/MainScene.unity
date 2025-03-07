@@ -24922,8 +24922,56 @@ PrefabInstance:
       value: -550
       objectReference: {fileID: 0}
     - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
-      propertyPath: _useAnimation
-      value: 1
+      propertyPath: test
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: test1
+      value: Test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: test2
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: test3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: choice
+      value: Choice2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: choice1
+      value: Choice3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: choice2
+      value: Choice3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: choice3
+      value: Choice2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: choice4
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: _overrideAnimation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: _dialogueVariablesNames
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490076174252159398, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: _dialogueVariablesNamesS
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950787738161259304, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
+      propertyPath: _resetStoryOnDialogueStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3826422838121473551, guid: cd8161d0cec73cd4282705bea2f314fa, type: 3}
       propertyPath: m_AnchorMax.y

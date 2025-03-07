@@ -9,9 +9,9 @@ public class ConditionInitializer : MonoBehaviour
     [SerializeField] private float _animationSmoothness;
     [ShowIf(nameof(_overrideAnimation), true, invert: true)]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesSO;
-    [ShowIf(nameof(_overrideAnimation), true, invert: true)]
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("Might not work as intended.", RequiredAttribute.WarningTypeEnum.Error)]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesS;
-    [ShowIf(nameof(_overrideAnimation), true, invert: true)]
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNames;
 
     [Enum("Test")]
