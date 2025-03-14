@@ -1,4 +1,4 @@
-using AdriKat.Utils.CodePatterns;
+using AdriKat.Toolkit.CodePatterns;
 using System.Collections;
 using TMPro;
 using UnityEngine;
