@@ -1,3 +1,4 @@
+using AdriKat.Toolkit.Attributes;
 using UnityEngine;
 
 public class ConditionInitializer : MonoBehaviour
@@ -7,12 +8,14 @@ public class ConditionInitializer : MonoBehaviour
     [SerializeField] private float _animationTimer;
     [ShowIf(nameof(_overrideAnimation)), Range(0, 5f)]
     [SerializeField] private float _animationSmoothness;
-    [ShowIf(nameof(_overrideAnimation), true, invert: true)]
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("To initialize the variables, this needs a dialogue variable names container scriptable object.", RequiredAttribute.WarningTypeEnum.Error)]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesSO;
-    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("Might not work as intended.", RequiredAttribute.WarningTypeEnum.Error)]
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("Test field (if empty, shows warning of type error).", RequiredAttribute.WarningTypeEnum.Error)]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNamesS;
-    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required]
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("Test field (if empty, shows warning of type warning).", RequiredAttribute.WarningTypeEnum.Error)]
     [SerializeField] private ConditionVariableNamesSO _dialogueVariablesNames;
+    [ShowIf(nameof(_overrideAnimation), true, invert: true), Required("Test field (if empty, shows warning of type info).", RequiredAttribute.WarningTypeEnum.Info)]
+    [SerializeField] private ConditionVariableNamesSO _dialogueVariablesName;
 
     [Enum("Test")]
     [SerializeField] private string test;
